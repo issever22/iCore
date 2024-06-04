@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="c_secondary">#FE713A</color>
+    <color name="c_primary">#F24048</color>
+    <color name="c_status_bar">#FE7139</color>
+    <color name="c_navigation_bar">#E50F56</color>
+
+    <color name="c_black_white">#FFFFFF</color>
+    <color name="c_lavender">#262730</color>
+    <color name="c_snow">#12131A</color>
+    <color name="c_midnight">#FDFDFD</color>
+    <color name="c_state">#C7C7C7</color>
+    <color name="c_navy">#F5F5F5</color>
+    <color name="c_alice">#191A21</color>
+    <color name="c_moe">#E0E0E0</color>
+    <color name="c_ghost">#202129</color>
+    <color name="c_gainsboro">#81838F</color>
+    <color name="c_steel">#A9AAAC</color>
+    <color name="c_slate">#C7C7C7</color>
+    <color name="c_silver">#44454D</color>
+
+</resources>

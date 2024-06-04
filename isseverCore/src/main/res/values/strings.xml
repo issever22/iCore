@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Errors -->
+    <string name="network_error">Server connection error, please try again later…</string>
+    <string name="went_wrong">Something went wrong…</string>
+    <string name="common_error">There is a problem right now, please try again later…</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="open_error">No application can process this request.</string>
+    <string name="invalid_url">Please enter a valid URL</string>
+
+    <!-- Common -->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="next">Next</string>
+    <string name="ok">Okay</string>
+    <string name="cancel">Cancel</string>
+    <string name="search">Search…</string>
+    <string name="lets_start">Let\'s Get Started</string>
+
+    <!-- Language Names -->
+    <string name="english" translatable="false">English</string>
+    <string name="turkish" translatable="false">Türkçe</string>
+
+</resources>

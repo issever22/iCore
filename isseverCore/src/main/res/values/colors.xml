@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="c_secondary">#FE713A</color>
+    <color name="c_primary">#F24048</color>
+    <color name="c_status_bar">#FE7139</color>
+    <color name="c_navigation_bar">#E50F56</color>
+
+    // Snackbar colors
+    <color name="c_success">#20C662</color>
+    <color name="c_error">#FD5757</color>
+    <color name="c_info">#2196F3</color>
+    <color name="c_warning">#E9D502</color>
+    <color name="c_default">#333333</color>
+
+
+    <color name="transparent">#00000000</color>
+
+    <color name="c_white">#ffffff</color>
+    <color name="c_black_white">#000000</color>
+    <color name="c_lavender">#E0E0E0</color>
+    <color name="c_snow">#FDFDFD</color>
+    <color name="c_ghost">#EFEFEF</color>
+    <color name="c_midnight">#12131A</color>
+    <color name="c_state">#44454D</color>
+    <color name="c_navy">#191A21</color>
+    <color name="c_green">#20C662</color>
+    <color name="c_alice">#F5F5F5</color>
+    <color name="c_moe">#262730</color>
+    <color name="c_gainsboro">#A9AAAC</color>
+    <color name="c_red">#FD5757</color>
+    <color name="c_steel">#81838F</color>
+    <color name="c_orange">#EC9A39</color>
+    <color name="c_slate">#44454D</color>
+    <color name="c_silver">#C7C7C7</color>
+    <color name="c_blue">#45C3ED</color>
+
+</resources>

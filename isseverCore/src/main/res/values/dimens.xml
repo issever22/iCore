@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="snackbar_icon_padding">16dp</dimen>
+</resources>

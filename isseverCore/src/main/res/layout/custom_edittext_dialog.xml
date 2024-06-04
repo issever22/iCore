@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="10dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dialogEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:textColorHint="@color/c_steel"
+            android:background="@color/transparent"
+            android:textColor="@color/c_black_white" />
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>
