@@ -105,10 +105,14 @@ class YourFragment : BaseFragment<FragmentYourBinding, YourViewModel>() {
 
     override fun init() {
         super.init()
-        binding.viewModel = viewModel
+        // Set the LifecycleOwner for LiveData observation
         binding.lifecycleOwner = this
+
+        // Set the loading view to be shown during loading states
         loadingView = binding.progressBar
-        backButton = binding.ivBack
+
+        // Set the back button to navigate up when pressed
+        backButton = binding.yourBackButtonImageView
     }
 
     override fun initObservers() {
