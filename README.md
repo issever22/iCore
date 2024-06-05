@@ -91,6 +91,20 @@ class YourActivity : BaseActivity<ActivityYourBinding, YourViewModel>() {
 }
 ```
 
+#### Note: If your activity or fragment does not require a ViewModel, you can use Nothing in place of YourViewModel. For example:
+
+```kotlin
+class YourActivity : BaseActivity<ActivityYourBinding, Nothing>() {
+
+    override fun initViewBinding() = ActivityYourBinding.inflate(layoutInflater)
+
+    override fun init() {
+        super.init()
+        // Additional initialization here
+    }
+}
+```
+
 ### BaseFragment
 
 Create your fragments by extending `BaseFragment`:
@@ -108,10 +122,10 @@ class YourFragment : BaseFragment<FragmentYourBinding, YourViewModel>() {
         // Set the LifecycleOwner for LiveData observation
         binding.lifecycleOwner = this
 
-        // Set the loading view to be shown during loading states
+        // If needed, set the loading view to be shown during loading states
         loadingView = binding.progressBar
 
-        // Set the back button to navigate up when pressed
+        // If needed, set the back button to navigate up when pressed if needed
         backButton = binding.yourBackButtonImageView
     }
 
