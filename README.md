@@ -261,7 +261,7 @@ myImageView.loadImage("ImageUrl, ImageUri or ImageSource")
             onNegativeClick = {
                 // Do something
             },
-            customizeView = {
+            customizeView = { dilogViewBindig ->
                 // Do something
             })
 ```
