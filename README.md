@@ -243,7 +243,7 @@ observe(viewModel.someLiveData) {
 #### Loading Images
 
 ```kotlin
-myImageView.loadImage("imageUrl, ImageUri or ImageSource")
+myImageView.loadImage("ImageUrl, ImageUri or ImageSource")
 ```
 
 #### Custom Dialog
