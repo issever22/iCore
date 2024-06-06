@@ -172,6 +172,34 @@ class YourViewModel(
 }
 ```
 
+### BaseAdapter
+
+#### Adapter Class
+
+Create your adapter by extending `BaseAdapter`:
+
+```kotlin
+class YourAdapter : BaseAdapter<YourModel, ItemYourBinding>(ItemYourBinding::inflate) {
+
+    override fun bind(holder: BaseViewHolder, item: YourModel, context: Context) {
+        holder.apply {
+            binding.tvYourTextView.text = item.someProperty
+        }
+    }
+}
+```
+
+#### Activity or Fragment
+Use your adapter in an Activity or Fragment:
+```kotlin
+val adapter = YourAdapter()
+binding.recyclerView.adapter = adapter
+adapter.submitList(yourList)
+adapter.setOnItemClickListener {
+    // Do something
+}
+```
+
 ### Retrofit Setup
 
 To create a Retrofit instance using iCore, follow these steps:
