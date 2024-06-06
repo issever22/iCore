@@ -282,6 +282,34 @@ myImageView.loadImage("ImageUrl, ImageUri or ImageSource")
 
 For a complete list of extension functions and their usage, please refer to the source code.
 
+
+## Accessing Application Context
+
+You can use `ResourceProvider` to access the application context and resources from anywhere in your application:
+
+```kotlin
+// Get application context
+val appContext = ResourceProvider.getAppContext()
+
+// Get a string resource
+val myString = ResourceProvider.getString(R.string.my_string)
+
+// Get a drawable resource
+val myDrawable = ResourceProvider.getDrawable(R.drawable.my_drawable)
+
+// Get a color resource
+val myColor = ResourceProvider.getColor(R.color.my_color)
+
+// Get a dimension resource
+val myDimension = ResourceProvider.getDimension(R.dimen.my_dimension)
+
+// Get a boolean resource
+val myBoolean = ResourceProvider.getBoolean(R.bool.my_boolean)
+
+// Get an integer resource
+val myInteger = ResourceProvider.getInteger(R.integer.my_integer)
+```
+
 ## Contributing
 
 If you would like to contribute to this project, please follow these steps:
