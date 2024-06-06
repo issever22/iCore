@@ -20,9 +20,9 @@ fun String?.emptyIfNull(): String {
     }
 }
 
-fun String?.showToast() {
+fun String?.showToast(duration: Int = Toast.LENGTH_SHORT) {
     this?.let {
-        Toast.makeText(ResourceProvider.getAppContext(), it, Toast.LENGTH_SHORT).show()
+        Toast.makeText(ResourceProvider.getAppContext(), it, duration).show()
     }
 }
 

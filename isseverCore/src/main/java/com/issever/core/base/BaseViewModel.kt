@@ -19,8 +19,8 @@ import kotlinx.coroutines.launch
 abstract class BaseViewModel : ViewModel() {
 
     // Lazy-initialized properties for local data and resource provider
-    val localData: BaseLocalData by lazy { IsseverCore.getBaseLocalData() }
-    val resourceProvider: ResourceProvider by lazy { ResourceProvider }
+    open val coreLocalData: BaseLocalData by lazy { IsseverCore.getBaseLocalData() }
+    open val resourceProvider: ResourceProvider by lazy { ResourceProvider }
 
     // LiveData to observe loading state
     private val _isLoading = MutableLiveData<Boolean>()

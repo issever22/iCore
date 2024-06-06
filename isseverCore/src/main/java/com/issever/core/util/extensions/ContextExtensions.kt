@@ -10,10 +10,12 @@ import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
+import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -39,8 +41,8 @@ fun Context.hasInternet(): Boolean {
     }
 }
 
-fun Context.showToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+fun Context.showToast(message: String, duration: Int = Toast.LENGTH_LONG) {
+    Toast.makeText(this, message, duration).show()
 }
 
 
@@ -75,12 +77,14 @@ fun Context.openWebPage(url: String) {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun Context.triggerSmallVibration(duration: Long = 100) {
     val vibrator = this.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     val effect = VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE)
     vibrator.vibrate(effect)
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun Context.showDateTimePicker(initialDateTime: LocalDateTime, onDateTimeSelected: (LocalDateTime) -> Unit) {
     val datePickerDialog = DatePickerDialog(this, { _, year, month, dayOfMonth ->
         val selectedDate = LocalDateTime.of(year, month + 1, dayOfMonth, 0, 0)
@@ -107,8 +111,7 @@ fun Context.compressImage(imagePath: String, quality: Int = 20, onComplete: (Byt
             }
 
             override fun onLoadCleared(placeholder: android.graphics.drawable.Drawable?) {
-                Log.e("TAG", "onLoadCleared: COMPRESS LOAD CLEAR")
-                // Yapılacak bir şey yok
+                Log.e("TAG", "onLoadCleared: COMPRESS LOAD CLEARED")
             }
         })
 }

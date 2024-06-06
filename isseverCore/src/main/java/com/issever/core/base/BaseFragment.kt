@@ -14,10 +14,10 @@ import com.issever.core.util.extensions.showSnackbar
 abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel?> : Fragment() {
 
     private var _binding: VB? = null
-    val binding get() = _binding!!
+    open val binding get() = _binding!!
 
     protected val currentActivity: BaseActivity<*, *> by lazy { requireActivity() as BaseActivity<*, *> }
-    val localData: BaseLocalData by lazy { IsseverCore.getBaseLocalData() }
+    open val coreLocalData: BaseLocalData by lazy { IsseverCore.getBaseLocalData() }
     protected open val viewModel: VM? = null
     protected abstract fun initViewBinding(): VB
     protected open fun init() {}

@@ -1,7 +1,5 @@
 package com.issever.core.base
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,10 +16,10 @@ import com.issever.core.util.extensions.showSnackbar
 abstract class BaseBottomSheetDialogFragment<VB : ViewBinding,VM : BaseViewModel?> : BottomSheetDialogFragment() {
 
     private var _binding: VB? = null
-    val binding get() = _binding!!
+    open val binding get() = _binding!!
 
     protected val currentActivity: BaseActivity<*, *> by lazy { requireActivity() as BaseActivity<*, *> }
-    val localData: BaseLocalData by lazy { IsseverCore.getBaseLocalData() }
+    open val coreLocalData: BaseLocalData by lazy { IsseverCore.getBaseLocalData() }
     protected open val viewModel: VM? = null
     protected abstract fun initViewBinding(): VB
     protected open fun init() {}
