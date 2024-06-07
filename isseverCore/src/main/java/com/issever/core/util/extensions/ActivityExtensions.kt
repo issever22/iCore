@@ -4,6 +4,7 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
@@ -16,6 +17,9 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageView
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
@@ -425,8 +429,39 @@ fun AppCompatActivity.isServiceRunning(serviceClass: Class<*>): Boolean {
 
 fun AppCompatActivity.startServiceIfNeeded(serviceIntent: Intent,serviceClass: Class<*>) {
     if (!isServiceRunning(serviceClass)) {
-        startForegroundService(serviceIntent)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent)
+        }else{
+            startService(serviceIntent)
+        }
     }
+}
+
+fun AppCompatActivity.pickAndCompressImage(
+    imageView: ImageView? = null,
+    imageLoadedCallback: ((Bitmap) -> Unit)? = null,
+) {
+    registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        uri?.let {
+            compressImage(it.toString(), onComplete = { byteArray ->
+                val bitmap = byteArray.toBitmap()
+                imageView?.loadImage(bitmap)
+                imageLoadedCallback?.invoke(bitmap)
+            })
+        }
+    }.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+}
+
+fun AppCompatActivity.pickImage(
+    imageView: ImageView? = null,
+    imageLoadedCallback: ((Uri) -> Unit)? = null,
+) {
+    registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        uri?.let {
+            imageView?.loadImage(it)
+            imageLoadedCallback?.invoke(it)
+        }
+    }.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
 }
 
 

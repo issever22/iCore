@@ -1,10 +1,13 @@
 package com.issever.core.util.extensions
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.issever.core.util.Errors.COMMON_ERROR
 import com.issever.core.util.Errors.NETWORK_ERROR
 import com.issever.core.util.Errors.WENT_WRONG
@@ -31,12 +34,14 @@ fun Exception?.handleError(): String {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun LocalDateTime.toFormattedDateWithClock(): String {
     val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT)
         .withLocale(Locale.getDefault())
     return this.format(formatter)
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun Date.toZonedDateTime(): ZonedDateTime {
     return Instant.ofEpochMilli(this.time).atZone(ZoneId.systemDefault())
 }
@@ -65,4 +70,8 @@ inline fun <reified T : Serializable> Bundle.customGetSerializable(key: String):
     } else {
         getSerializable(key) as? T
     }
+}
+
+fun ByteArray.toBitmap(): Bitmap {
+    return BitmapFactory.decodeByteArray(this, 0, size)
 }

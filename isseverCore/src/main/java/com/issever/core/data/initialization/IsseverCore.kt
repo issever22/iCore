@@ -32,9 +32,13 @@ object IsseverCore {
         baseLocalData = coreOptions.localDataClass?.let {
             val instance = it.getDeclaredConstructor().newInstance()
             instance.init(application)
+            instance.saveInitialLocale()
+            instance.getSelectedTheme().setTheme()
             instance
         } ?: CoreLocalData.apply {
             init(application)
+            saveInitialLocale()
+            getSelectedTheme().setTheme()
         }
 
         if (coreOptions.isCrashlyticsEnabled) {

@@ -1,7 +1,9 @@
 package com.issever.core.util.extensions
 
+import android.os.Build
 import android.util.Patterns
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.issever.core.data.enums.SnackbarType
 import com.issever.core.data.model.SnackbarMessage
 import com.issever.core.util.Errors.INVALID_URL
@@ -59,6 +61,7 @@ fun String.capitalizeFirstLetter(): String {
     return this.substring(0, 1).uppercase() + this.substring(1)
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun String.convertToSystemDateFormat(): String {
     val sourceFormats = listOf(
         DateTimeFormatter.ofPattern("yyyy-MM-dd"),
