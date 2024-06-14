@@ -77,11 +77,6 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-scalars:$retrofitVersion")
 
-    // Moshi
-    val moshiVersion = "1.15.0"
-    implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
-
     // OkHttp
     val okHttpVersion = "5.0.0-alpha.2"
     implementation("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
@@ -105,7 +100,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "com.github.issever22"
                 artifactId = "iCore"
-                version = "1.0.4"
+                version = "1.0.5"
 
                 pom {
                     name.set("iCore")

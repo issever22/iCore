@@ -6,29 +6,16 @@ import com.issever.core.R
 import com.issever.core.util.CoreConstants.CoreRemote.APPLICATION_JSON
 import com.issever.core.util.CoreConstants.CoreRemote.CONTENT_TYPE
 import com.issever.core.util.ResourceProvider
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 object CoreNetwork {
 
     val gson: Gson by lazy {
         GsonBuilder().setLenient().create()
-    }
-
-    val moshi: Moshi by lazy {
-        Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
-    }
-
-    private val moshiConverterFactory: MoshiConverterFactory by lazy {
-        MoshiConverterFactory.create(moshi)
     }
 
     private val gsonConverterFactory: GsonConverterFactory by lazy {
@@ -64,7 +51,6 @@ object CoreNetwork {
     fun provideRetrofit(baseUrl: String, headers: Map<String, String> = emptyMap()): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
-            .addConverterFactory(moshiConverterFactory)
             .addConverterFactory(gsonConverterFactory)
             .client(createClient(headers))
             .build()
