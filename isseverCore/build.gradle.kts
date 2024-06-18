@@ -100,7 +100,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "com.github.issever22"
                 artifactId = "iCore"
-                version = "1.0.5"
+                version = "1.0.6"
 
                 pom {
                     name.set("iCore")
