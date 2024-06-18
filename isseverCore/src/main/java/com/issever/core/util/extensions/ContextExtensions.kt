@@ -19,7 +19,7 @@ import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.issever.core.util.Errors.OPEN_ERROR
+import com.issever.core.util.CoreErrors.OPEN_ERROR
 import java.io.ByteArrayOutputStream
 import java.time.LocalDateTime
 import java.util.Locale

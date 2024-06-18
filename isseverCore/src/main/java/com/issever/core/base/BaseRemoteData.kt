@@ -3,17 +3,19 @@ package com.issever.core.base
 import android.util.Log
 import com.issever.core.util.CoreConstants.CoreTag.RESPONSE_HANDLER_ERROR
 import com.issever.core.util.CoreConstants.CoreTag.SAFE_CALL_ERROR
-import com.issever.core.util.Errors.COMMON_ERROR
-import com.issever.core.util.Errors.NO_INTERNET_CONNECTION
+import com.issever.core.util.CoreErrors.COMMON_ERROR
+import com.issever.core.util.CoreErrors.NO_INTERNET_CONNECTION
 import com.issever.core.util.InternetConnectionHelper
 import com.issever.core.util.Resource
 import com.issever.core.util.extensions.handleError
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException
-import com.issever.core.util.Errors.WENT_WRONG
+import com.issever.core.util.CoreErrors.WENT_WRONG
 import retrofit2.Response
 import com.issever.core.data.initialization.IsseverCore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 interface BaseRemoteData {
 
@@ -43,13 +45,15 @@ interface BaseRemoteData {
      *
      * @param call The suspend function that makes the network request and returns a Response.
      * @param entityConverter A function that converts the response body to the desired entity.
-     * @param doThen A suspend function to perform additional actions on the converted entity.
+     * @param backgroundAction A suspend function to perform additional actions on the response body.
+     *        This function runs on IO dispatcher. For actions that need to be performed on the main
+     *        thread, use doThenOnMain function in BaseRepository.
      * @return A Resource containing the converted entity or an error message.
      */
     private suspend fun <T, E> handleResponse(
         call: suspend () -> Response<T>,
         entityConverter: (T) -> E,
-        doThen: suspend (E) -> Unit
+        backgroundAction: suspend (E) -> Unit
     ): Resource<E> {
 
         val response = call.invoke()
@@ -57,7 +61,9 @@ interface BaseRemoteData {
             val body = response.body()
             if (body != null) {
                 val successData = entityConverter(body)
-                doThen.invoke(successData)
+                withContext(Dispatchers.IO){
+                    backgroundAction.invoke(successData)
+                }
                 Resource.success(successData)
             } else {
                 Resource.error(response.message() ?: COMMON_ERROR)
@@ -77,7 +83,7 @@ interface BaseRemoteData {
                 COMMON_ERROR
             }
             Log.e(RESPONSE_HANDLER_ERROR, errorMessage)
-            Resource.error(errorMessage)
+            Resource.error(errorMessage, errorBody = errorBody)
         }
     }
 
@@ -85,15 +91,17 @@ interface BaseRemoteData {
      * Makes a network request and handles the response, performing an additional action on the response body.
      *
      * @param call The suspend function that makes the network request and returns a Response.
-     * @param doThen A suspend function to perform additional actions on the response body.
+     * @param backgroundAction A suspend function to perform additional actions on the response body.
+     *        This function runs on IO dispatcher. For actions that need to be performed on the main
+     *        thread, use doThenOnMain function in BaseRepository.
      * @return A Resource containing the response body or an error message.
      */
     suspend fun <T> responseHandler(
         call: suspend () -> Response<T>,
-        doThen: suspend (T) -> Unit = {}
+        backgroundAction: suspend (T) -> Unit = {}
     ): Resource<T> {
         return safeCall {
-            handleResponse(call, { it }, doThen)
+            handleResponse(call, { it }, backgroundAction)
         }
     }
 
@@ -103,16 +111,18 @@ interface BaseRemoteData {
      *
      * @param call The suspend function that makes the network request and returns a Response.
      * @param entityConverter A function that converts the response body to the desired entity.
-     * @param doThen A suspend function to perform additional actions on the converted entity.
+     * @param backgroundAction A suspend function to perform additional actions on the response body.
+     *        This function runs on IO dispatcher. For actions that need to be performed on the main
+     *        thread, use doThenOnMain function in BaseRepository.
      * @return A Resource containing the converted entity or an error message.
      */
     suspend fun <T, E> responseHandler(
         call: suspend () -> Response<T>,
         entityConverter: (T) -> E,
-        doThen: suspend (E) -> Unit = {}
+        backgroundAction: suspend (E) -> Unit = {}
     ): Resource<E> {
         return safeCall {
-            handleResponse(call, entityConverter, doThen)
+            handleResponse(call, entityConverter, backgroundAction)
         }
     }
 }

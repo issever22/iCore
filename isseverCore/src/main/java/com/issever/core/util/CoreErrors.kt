@@ -3,7 +3,7 @@ package com.issever.core.util
 import com.issever.core.R
 
 
-object Errors  {
+object CoreErrors  {
 
     val NO_INTERNET_CONNECTION: String
         get() = ResourceProvider.getString(R.string.no_internet_connection)

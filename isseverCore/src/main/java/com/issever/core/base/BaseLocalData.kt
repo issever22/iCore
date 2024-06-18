@@ -1,10 +1,9 @@
 package com.issever.core.base
 
-import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.google.gson.Gson
 import com.issever.core.data.enums.Theme
 import com.issever.core.data.remote.CoreNetwork
 import com.issever.core.util.CoreConstants.CoreLocalData.DATABASE_NAME
@@ -12,17 +11,18 @@ import com.issever.core.util.CoreConstants.CoreLocalData.DEFAULT_LANG
 import com.issever.core.util.CoreConstants.CoreLocalData.LANG_KEY
 import com.issever.core.util.CoreConstants.CoreLocalData.THEME
 import com.issever.core.util.Resource
+import com.issever.core.util.ResourceProvider
 import com.issever.core.util.extensions.handleError
 import java.util.Locale
 
 abstract class BaseLocalData {
 
     open lateinit var preferences: SharedPreferences
-    open lateinit var gson: Gson
+    open var gson = CoreNetwork.gson
     private var isInitialized = false
 
-    open fun init(context: Context) {
-        if (isInitialized) return
+    init {
+        val context = ResourceProvider.getAppContext()
         val masterKey: MasterKey = MasterKey.Builder(context)
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
             .build()
@@ -35,7 +35,6 @@ abstract class BaseLocalData {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
 
-        gson = CoreNetwork.gson
         isInitialized = true
     }
 
@@ -47,6 +46,7 @@ abstract class BaseLocalData {
             val result = operation.invoke()
             Resource.success(result, successMessage)
         } catch (e: Exception) {
+            Log.e("BaseLocalData", e.localizedMessage ?: "database operation error")
             Resource.error(e.handleError())
         }
     }

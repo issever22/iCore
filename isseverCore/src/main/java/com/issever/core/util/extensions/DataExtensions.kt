@@ -8,9 +8,9 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.issever.core.util.Errors.COMMON_ERROR
-import com.issever.core.util.Errors.NETWORK_ERROR
-import com.issever.core.util.Errors.WENT_WRONG
+import com.issever.core.util.CoreErrors.COMMON_ERROR
+import com.issever.core.util.CoreErrors.NETWORK_ERROR
+import com.issever.core.util.CoreErrors.WENT_WRONG
 import java.io.Serializable
 import java.net.SocketTimeoutException
 import java.time.Instant

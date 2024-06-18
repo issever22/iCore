@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.issever.core.data.enums.SnackbarType
 import com.issever.core.data.model.SnackbarMessage
-import com.issever.core.util.Errors.INVALID_URL
+import com.issever.core.util.CoreErrors.INVALID_URL
 import com.issever.core.util.ResourceProvider
 import java.time.LocalDate
 import java.time.ZoneId

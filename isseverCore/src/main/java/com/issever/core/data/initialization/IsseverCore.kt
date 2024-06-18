@@ -31,7 +31,6 @@ object IsseverCore {
         // LocalData initialization
         baseLocalData = coreOptions.localDataClass?.let {
             val instance = it.getDeclaredConstructor().newInstance()
-            instance.init(application)
             instance.saveInitialLocale()
             instance.getSelectedTheme().setTheme()
             instance

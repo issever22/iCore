@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.issever.core.data.enums.SnackbarType
 import com.issever.core.data.enums.ResourceStatus
 import com.issever.core.data.model.SnackbarMessage
-import com.issever.core.util.Errors.COMMON_ERROR
+import com.issever.core.util.CoreErrors.COMMON_ERROR
 import com.issever.core.data.initialization.IsseverCore
 import com.issever.core.util.Resource
 import com.issever.core.util.ResourceProvider
@@ -118,7 +118,7 @@ abstract class BaseViewModel : ViewModel() {
      * @param T The type of the data being collected.
      * @param operation The suspend function returning a Flow of Resource.
      * @param successAction Optional action to perform on success.
-     * @param errorAction Optional action to perform on error.
+     * @param errorAction Optional action to perform on error. Takes a message and an optional error body.
      * @param loadingAction Optional action to perform while loading.
      * @param snackbarType Optional type of Snackbar to show on error or other custom state.
      * @param actionText Optional text for the Snackbar action button.
@@ -127,7 +127,7 @@ abstract class BaseViewModel : ViewModel() {
     open fun <T> collectData(
         operation: suspend () -> Flow<Resource<T>>,
         successAction: ((T?) -> Unit)? = null,
-        errorAction: ((String) -> Unit)? = null,
+        errorAction: ((String, String?) -> Unit)? = null,
         loadingAction: (() -> Unit)? = null,
         snackbarType: SnackbarType? = null,
         actionText: String? = null,
@@ -163,7 +163,7 @@ abstract class BaseViewModel : ViewModel() {
                                 )
                             )
                         }
-                        errorAction?.invoke(it.message ?: COMMON_ERROR)
+                        errorAction?.invoke(it.message ?: COMMON_ERROR,it.errorBody)
                     }
 
                     ResourceStatus.WARNING -> {
@@ -179,7 +179,7 @@ abstract class BaseViewModel : ViewModel() {
                                 )
                             )
                         }
-                        errorAction?.invoke(it.message ?: COMMON_ERROR)
+                        errorAction?.invoke(it.message ?: COMMON_ERROR,it.errorBody)
                     }
 
                     ResourceStatus.INFO -> {
