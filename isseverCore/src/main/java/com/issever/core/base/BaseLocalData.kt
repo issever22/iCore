@@ -134,4 +134,15 @@ abstract class BaseLocalData {
         return jsonData?.let { gson.fromJson(it, type) }
             ?: throw NoSuchElementException("No data found for key $saveName")
     }
+
+    open fun <T> setJsonArrayData(saveName: String, data: List<T>) {
+        val jsonData = gson.toJson(data)
+        preferences.edit().putString(saveName, jsonData).apply()
+    }
+
+    open fun <T> getJsonArrayData(saveName: String, type: Class<Array<T>>): List<T> {
+        val jsonData = preferences.getString(saveName, null)
+        return jsonData?.let { gson.fromJson(it, type).toList() }
+            ?: emptyList()
+    }
 }
