@@ -34,6 +34,7 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel?> : AppCompatAc
         _binding = initViewBinding()
         setContentView(binding.root)
         setupFullScreenMode()
+        init()
 
         viewModel?.snackbarText?.observe(this) {
             _binding?.root?.showSnackbar(it)
@@ -43,7 +44,6 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel?> : AppCompatAc
             loadingView?.isVisible = it
         }
 
-        init()
         initObservers()
     }
 

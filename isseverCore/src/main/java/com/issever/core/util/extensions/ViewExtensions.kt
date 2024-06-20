@@ -213,6 +213,7 @@ fun View.showSnackbar(message: SnackbarMessage) {
         snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
     val actionView =
         snackbar.view.findViewById<Button>(com.google.android.material.R.id.snackbar_action)
+    snackbar.setTextColor(ContextCompat.getColor(context, R.color.c_white))
 
     with(snackbar.view) {
         when (message.type) {
@@ -261,7 +262,6 @@ fun View.showSnackbar(message: SnackbarMessage) {
 
 fun Snackbar.setTheme(color: Int, textView: TextView, @DrawableRes icon: Int) {
     setBackgroundTint(ContextCompat.getColor(context, color))
-    textView.setTextColor(ContextCompat.getColor(context, R.color.c_white))
     val drawable = ContextCompat.getDrawable(textView.context, icon)
     textView.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, null, null, null)
     textView.compoundDrawablePadding =

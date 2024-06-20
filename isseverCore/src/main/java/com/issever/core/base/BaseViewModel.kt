@@ -38,6 +38,14 @@ abstract class BaseViewModel : ViewModel() {
         get() = _navigateBack
 
     /**
+     * Navigates back to the previous screen.
+     * Override this function in a subclass to provide custom navigation logic.
+     */
+    open fun navigateBack() {
+        _navigateBack.value = true
+    }
+
+    /**
      * Shows a loading indicator.
      * Override this function in a subclass to provide a custom loading indicator.
      */

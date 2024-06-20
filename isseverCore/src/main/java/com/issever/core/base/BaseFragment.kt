@@ -34,6 +34,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel?> : Fragment() 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        init()
 
         viewModel?.snackbarText?.observe(viewLifecycleOwner) {
             _binding?.root?.showSnackbar(it)
@@ -50,7 +51,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel?> : Fragment() 
             findNavController().navigateUp()
         }
 
-        init()
         initObservers()
     }
 

@@ -41,6 +41,8 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding,VM : BaseViewModel
         val bottomSheet = dialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
         behavior = BottomSheetBehavior.from(bottomSheet!!)
 
+        init()
+
         viewModel?.snackbarText?.observe(viewLifecycleOwner) {
             _binding?.root?.showSnackbar(it)
         }
@@ -48,7 +50,6 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding,VM : BaseViewModel
             loadingView?.isVisible = it
         }
 
-        init()
         initObservers()
     }
 
