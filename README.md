@@ -10,6 +10,11 @@ iCore is a library that provides modular and reusable components for Android app
 - **Extension Functions**: Includes useful extension functions to simplify common tasks.
 - **Utility Classes**: Provides utility classes for network operations, local data management, and more.
 
+## Sample Application
+To better understand how to use the iCore library and to see its architecture in action, check out the sample application included in the app module of this repository.
+
+You can find the sample application [here](./app).
+
 ## Installation
 
 ### Gradle
