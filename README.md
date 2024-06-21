@@ -296,7 +296,7 @@ private val languages = mapOf(
     "Türkçe" to "tr"
 )
 
-currentActivity.showLanguageChoiceDialog()
+currentActivity.showLanguageChoiceDialog(languages)
 ```
 
 #### Loading Images
