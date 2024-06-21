@@ -174,6 +174,26 @@ class YourViewModel(
             }
         )
     }
+
+    fun sampleFunction() {
+        collectData({
+            // The function to be executed to fetch data from the repository
+            repository.sampleFunction()
+        }, successAction = {
+            // Code to be executed when the data fetching is successful
+            // This is typically where you would handle the successful response
+        }, errorAction = { message, errorBody ->
+            // Code to be executed when there is an error in fetching data
+            // Here you can handle the error
+        }, loadingAction = {
+            // Code to be executed while the data is being loaded
+        }, snackbarType = SnackbarType.DEFAULT,
+            actionText = "Action",
+            snackBarAction = {
+                // Action to be performed when the snackbar action is triggered
+                // This is typically used for actions that the user can perform directly from the snackbar, such as retrying a failed operation
+            })
+    }
 }
 ```
 
@@ -232,21 +252,15 @@ Create a remote data source class by extending `BaseRemoteData`:
 class SomeRemoteData(private val service: SomeService) : BaseRemoteData {
 
     suspend fun login(user: SomeRequestModel): Resource<SomeResponseModel> {
-        return responseHandler { service.login(user) }
+        return responseHandler({ service.login(user) }
     }
 
-    // If needed, you can add additional actions to be performed on a successful response.
-    suspend fun login(user: SomeRequestModel): Resource<SomeResponseModel> {
-        return responseHandler({ service.login(user) }, doThen = {
-            // Do something after success
-        })
-    }
-
-    // If needed, you can convert the response body to the desired entity.
+    // If needed, you can add additional actions or convert the response body to the desired entity.
     suspend fun login(user: SomeRequestModel): Resource<SomeResponseConvertedEntity> {
         return responseHandler({ service.login(user) }, entityConverter = { response ->
-            // Convert SomeResponseModel to SomeResponseConvertedEntity
-            SomeResponseConvertedEntity(response.someField, response.anotherField)
+            // Here you can convert the response to the desired entity.
+        }, doThenOnIO = { response ->
+            // Here you can perform additional operations in the IO thread.
         })
     }
 }
@@ -263,10 +277,10 @@ class SomeRepository(private val remoteData: SomeRemoteData) : BaseRepository {
         return emitResult({ remoteData.login(user) })
     }
 
-    // If needed, you can add additional actions to be performed on a successful response.
+    // If needed, you can add additional actions.
     suspend fun login(user: SomeRequestModel): Flow<Resource<SomeResponseModel>> {
-        return emitResult({ remoteData.login(user) }, { resource ->
-            resource.data?.let { YourLocalData.someAction(it) }
+        return emitResult({ remoteData.login(user) }, doThenOnMain = { resource ->
+            // Here you can perform additional operations on the Main Thread.
         })
     }
 }
