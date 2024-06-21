@@ -29,6 +29,8 @@ import androidx.core.view.isGone
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.issever.core.R
+import com.issever.core.data.enums.Theme
+import com.issever.core.data.localData.CoreLocalData
 import com.issever.core.databinding.DialogCustomBinding
 
 fun AppCompatActivity.showCustomDialog(
@@ -176,7 +178,7 @@ fun <T> AppCompatActivity.showChoiceDialog(
     val selected = map.entries.find { it.value.toString() == selectedKey }?.key ?: keys[0]
     val checkedItem = keys.indexOf(selected)
 
-    val builder = AlertDialog.Builder(this)
+    val builder = MaterialAlertDialogBuilder(this)
     builder.setTitle(title)
 
     builder.setSingleChoiceItems(keys, checkedItem) { dialog, which ->
@@ -204,7 +206,7 @@ inline fun <reified T> AppCompatActivity.showChoiceDialog(
     val values = map.values.toTypedArray()
     val checkedItem = selectedValue?.let { values.indexOf(it) } ?: -1
 
-    val builder = AlertDialog.Builder(this)
+    val builder = MaterialAlertDialogBuilder(this)
     builder.setTitle(title)
     val showingValues = values.map { it.toString() }.toTypedArray()
 
@@ -230,7 +232,7 @@ inline fun <reified T> AppCompatActivity.showChoiceDialog(
 ) {
     val checkedItem = selectedValue?.let { list.indexOf(it) } ?: -1
 
-    val builder = AlertDialog.Builder(this)
+    val builder = MaterialAlertDialogBuilder(this)
     builder.setTitle(title)
     val showingValues = list.map { it.toString() }.toTypedArray()
 
@@ -462,6 +464,30 @@ fun AppCompatActivity.pickImage(
             imageLoadedCallback?.invoke(it)
         }
     }.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+}
+
+fun AppCompatActivity.showThemeChoiceDialog() {
+    val themes = mapOf(
+        getString(R.string.light) to Theme.LIGHT,
+        getString(R.string.dark) to Theme.DARK,
+        getString(R.string.follow_system) to Theme.FOLLOW_SYSTEM
+    )
+
+    val currentTheme = CoreLocalData.getSelectedTheme()
+
+    showChoiceDialog(themes, currentTheme.name, getString(R.string.choose_theme)) { selectedTheme ->
+        selectedTheme.setTheme()
+        CoreLocalData.setSelectedTheme(selectedTheme)
+    }
+}
+
+fun AppCompatActivity.showLanguageChoiceDialog(languages: Map<String, String>) {
+    val currentLanguage = CoreLocalData.getSelectedLanguage()
+
+    showChoiceDialog(languages, currentLanguage, getString(R.string.choose_language)) { selectedLanguage ->
+        CoreLocalData.setSelectedLanguage(selectedLanguage)
+        recreate()
+    }
 }
 
 

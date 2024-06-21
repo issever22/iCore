@@ -16,7 +16,11 @@
     <string name="ok">Okay</string>
     <string name="cancel">Cancel</string>
     <string name="search">Search…</string>
-    <string name="lets_start">Let\'s Get Started</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="follow_system">Follow System</string>
+    <string name="choose_theme">Choose Theme</string>
+    <string name="choose_language">Choose Language</string>
 
     <!-- Language Names -->
     <string name="english" translatable="false">English</string>

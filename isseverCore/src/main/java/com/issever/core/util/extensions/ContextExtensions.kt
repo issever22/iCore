@@ -106,13 +106,11 @@ fun Context.compressImage(imagePath: String, quality: Int = 20, onComplete: (Byt
                 val byteArrayOutputStream = ByteArrayOutputStream()
                 resource.compress(Bitmap.CompressFormat.JPEG, quality, byteArrayOutputStream)
                 val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
-                Log.e("Compressed File Size", "Compressed file size: ${byteArray.size / (1024 * 1024.0)} MB")
+                Log.i("Compressed File Size", "Compressed file size: ${byteArray.size / (1024 * 1024.0)} MB")
                 onComplete(byteArray)
             }
 
-            override fun onLoadCleared(placeholder: android.graphics.drawable.Drawable?) {
-                Log.e("TAG", "onLoadCleared: COMPRESS LOAD CLEARED")
-            }
+            override fun onLoadCleared(placeholder: android.graphics.drawable.Drawable?) {}
         })
 }
 
