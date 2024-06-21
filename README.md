@@ -282,6 +282,23 @@ observe(viewModel.someLiveData) {
 }
 ```
 
+#### Theme Selection
+
+```kotlin
+currentActivity.showThemeChoiceDialog()
+```
+
+#### Language Selection
+
+```kotlin
+private val languages = mapOf(
+    "English" to "en",
+    "Türkçe" to "tr"
+)
+
+currentActivity.showLanguageChoiceDialog()
+```
+
 #### Loading Images
 
 ```kotlin
