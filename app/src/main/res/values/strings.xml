@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">iCore</string>
+    <string name="cat_fact_mark_favorite">This cat fact is marked as a favorite</string>
+    <string name="icore_demo_app">iCore Demo App</string>
+    <string name="get_facts">Get Facts</string>
+    <string name="show_favorite_fact">Show Favorite Fact</string>
+    <string name="get_error">Get Error</string>
+    <string name="favorite_fact">Favorite Fact</string>
+    <string name="cat_facts">Cat Facts</string>
+    <string name="remote_data_samples">Remote Data Samples</string>
+    <string name="snack_bar_types">Snack Bar Types</string>
+    <string name="s_success">Success</string>
+    <string name="s_error">Error</string>
+    <string name="s_warning">Warning</string>
+    <string name="s_info">Info</string>
+    <string name="s_default">Default</string>
+    <string name="icore_demo_app_desc">iCore is a library that provides modular and reusable components for Android applications, supporting the MVVM architecture. It includes base classes, extension functions, and various utility classes to reduce code duplication and speed up the development process. iCore also handles error management, providing a consistent approach to error handling across your application. Users can understand how to use the library by examining the sample application\'s code.\n\nThis library offers numerous tools that save time during development and make code maintenance easier. Please note that these are just some examples; for more details, please review the source code.\n\nYour feedback and contributions are valuable. Happy coding!</string>
+    <string name="remote_data">Remote Data</string>
+    <string name="remote_data_desc">Remote data requests are made using Retrofit and are processed in the BaseRemoteData, BaseRepository, and BaseViewModel classes. The iCore library simplifies error management by providing easy integration of additional actions such as displaying snackbars and handling local data. For more details, please review the architecture and usage examples in the sample application.</string>
+    <string name="cat_fact_desc">In this example, the BaseAdapter is used with a differ to manage list updates efficiently. It also includes several helper functions such as onClickListener and onLongClickListener. Additionally, you can see the usage of the CustomDialog extension with the \"Show Favorite Fact\" button.</string>
+    <string name="language_and_theme">Language and Theme</string>
+    <string name="language_and_theme_desc">iCore manages the application\'s theme and language settings. Users can select their preferred theme and language, and the library will apply these settings. By default, iCore checks the system settings and applies them accordingly.</string>
 </resources>
