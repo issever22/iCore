@@ -25,16 +25,20 @@ Add the following line to your project's `build.gradle` file:
 allprojects {
     repositories {
         ...
-        maven { url 'https://jitpack.io' }
+        maven { url = uri("https://jitpack.io") }
     }
 }
 ```
 
 Add the dependency to your module's `build.gradle` file:
 
+
+[![](https://jitpack.io/v/issever22/iCore.svg)](https://jitpack.io/#issever22/iCore)
+
+
 ```gradle
 dependencies {
-    implementation 'com.github.issever22:iCore:1.0.0' // Use the latest version
+    implementation("com.github.issever22:iCore:LATEST_VERSION")
 }
 ```
 
