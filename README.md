@@ -1,14 +1,19 @@
 # iCore
 
-iCore is a library that provides modular and reusable components for Android applications, supporting the MVVM architecture. It includes base classes, extension functions, and various utility classes to reduce code duplication and speed up the development process.
+iCore is a library designed to simplify Android application development. It provides a comprehensive and standardized structure for applications using the MVVM (Model-View-ViewModel) architecture.
 
-## Key Features
+- **Reducing Code Duplication:** By abstracting commonly used operations, it prevents the writing of repetitive code.
+  
+- **Quick Start:** With ready-to-use core components, it allows for a quick start to projects.
+  
+- **Easy Integration:** Easily integrates common operations like Retrofit, LiveData observation, and theme/language selection.
+  
+- **Reactive Data Management with Kotlin Flow and LiveData:** iCore manages asynchronous data streams using Kotlin Flow and handles UI updates with LiveData, offering a more reactive and modern data processing model.
+  
+- **Extensive Extensions:** Its extensible structure allows for customization according to application needs.
+  
+- **Centralized Management:** Provides centralized management by allowing easy access to application resources with `ResourceProvider`.
 
-- **Modular Structure**: Easy to integrate and use in any Android project.
-- **MVVM Support**: Built-in support for Model-View-ViewModel architecture.
-- **Base Classes**: Provides base classes for activities, fragments, view models, and more.
-- **Extension Functions**: Includes useful extension functions to simplify common tasks.
-- **Utility Classes**: Provides utility classes for network operations, local data management, and more.
 
 ## Sample Application
 To better understand how to use the iCore library and to see its architecture in action, check out the sample application included in the app module of this repository.
