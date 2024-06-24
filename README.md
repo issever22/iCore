@@ -399,6 +399,10 @@ If you would like to contribute to this project, please follow these steps:
 4. Push your branch (`git push origin feature/amazing-feature`)
 5. Create a new Pull Request
 
+
+For a detailed list of changes, please refer to the [CHANGELOG.md](./CHANGELOG.md) file.
+
+
 ## License
 
 This project is licensed under the [Apache 2.0 License](LICENSE).
