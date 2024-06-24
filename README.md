@@ -43,7 +43,7 @@ Add the dependency to your module's `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation("com.github.issever22:iCore:LATEST_VERSION")
+    implementation("com.github.issever22:iCore:v1.0.9")
 }
 ```
 
