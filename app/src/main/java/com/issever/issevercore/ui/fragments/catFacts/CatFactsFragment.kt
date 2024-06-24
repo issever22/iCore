@@ -1,6 +1,5 @@
 package com.issever.issevercore.ui.fragments.catFacts
 
-import android.util.Log
 import androidx.fragment.app.activityViewModels
 import com.issever.core.base.BaseFragment
 import com.issever.core.util.extensions.observe
