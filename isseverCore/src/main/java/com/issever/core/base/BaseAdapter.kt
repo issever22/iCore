@@ -2,6 +2,7 @@ package com.issever.core.base
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -28,15 +29,15 @@ abstract class BaseAdapter<T: Any, VB: ViewBinding>(
         })
     }
 
-    private var onItemClickListener: ((T) -> Unit)? = null
+    private var onItemClickListener: ((T, View) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (T) -> Unit) {
+    fun setOnItemClickListener(listener: (T, View) -> Unit) {
         onItemClickListener = listener
     }
 
-    private var onItemLongClickListener: ((T) -> Unit)? = null
+    private var onItemLongClickListener: ((T, View) -> Unit)? = null
 
-    fun setOnItemLongClickListener(listener: (T) -> Unit) {
+    fun setOnItemLongClickListener(listener: (T, View) -> Unit) {
         onItemLongClickListener = listener
     }
 
@@ -54,13 +55,24 @@ abstract class BaseAdapter<T: Any, VB: ViewBinding>(
         val item = getItem(position)
         bind(holder, item,holder.binding.root.context)
 
-        holder.binding.root.setOnClickListener {
-            onItemClickListener?.invoke(item)
-        }
+        setClickListenerForView(item,holder.binding.root)
+    }
 
-        holder.binding.root.setOnLongClickListener {
-            onItemLongClickListener?.invoke(item)
-            true
+    private fun setClickListenerForView(item: T, view: View) {
+        if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                val child = view.getChildAt(i)
+                setClickListenerForView(item,child)
+            }
+        } else {
+            view.setOnClickListener {
+                onItemClickListener?.invoke(item, it)
+            }
+
+            view.setOnLongClickListener {
+                onItemLongClickListener?.invoke(item, it)
+                true
+            }
         }
     }
 

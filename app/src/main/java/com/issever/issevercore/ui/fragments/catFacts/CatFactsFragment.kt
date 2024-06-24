@@ -1,5 +1,6 @@
 package com.issever.issevercore.ui.fragments.catFacts
 
+import android.util.Log
 import androidx.fragment.app.activityViewModels
 import com.issever.core.base.BaseFragment
 import com.issever.core.util.extensions.observe
@@ -28,8 +29,11 @@ class CatFactsFragment : BaseFragment<FragmentCatFactsBinding, MainViewModel>() 
         viewModel.getCatFacts()
 
         binding.rvFacts.adapter = adapter
-        adapter.setOnItemClickListener {
-            viewModel.setFavoriteCatFact(it)
+
+        // `view` is the specific View within the item layout that was clicked.
+        // This allows you to perform actions or access properties of the clicked View directly.
+        adapter.setOnItemClickListener { item, view ->
+            viewModel.setFavoriteCatFact(item)
         }
     }
 

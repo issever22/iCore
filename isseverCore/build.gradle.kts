@@ -75,7 +75,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
     // OkHttp
-    val okHttpVersion = "5.0.0-alpha.2"
+    val okHttpVersion = "4.12.0"
     implementation("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
 
     // Navigation
@@ -96,7 +96,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "com.github.issever22"
                 artifactId = "iCore"
-                version = "1.0.8"
+                version = "1.0.9"
 
                 pom {
                     name.set("iCore")
