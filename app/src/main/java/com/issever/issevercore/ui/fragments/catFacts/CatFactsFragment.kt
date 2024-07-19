@@ -31,8 +31,11 @@ class CatFactsFragment : BaseFragment<FragmentCatFactsBinding, MainViewModel>() 
 
         // `view` is the specific View within the item layout that was clicked.
         // This allows you to perform actions or access properties of the clicked View directly.
-        adapter.setOnItemClickListener { item, view ->
-            viewModel.setFavoriteCatFact(item)
+        adapter.setOnItemViewClickListener { item, view ->
+            when (view.id) {
+                //R.id.someID -> Do something
+                else -> viewModel.setFavoriteCatFact(item)
+            }
         }
     }
 
