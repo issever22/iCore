@@ -29,16 +29,43 @@ abstract class BaseAdapter<T: Any, VB: ViewBinding>(
         })
     }
 
-    private var onItemClickListener: ((T, View) -> Unit)? = null
+    private var onItemViewClickListener: ((T, View) -> Unit)? = null
+    private var onItemClickListener: ((T) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (T, View) -> Unit) {
+    fun setOnItemViewClickListener(listener: (T, View) -> Unit) {
+        onItemViewClickListener = listener
+    }
+
+    fun setOnItemClickListener(listener: (T) -> Unit) {
         onItemClickListener = listener
     }
 
-    private var onItemLongClickListener: ((T, View) -> Unit)? = null
+    private var onItemViewLongClickListener: ((T, View) -> Unit)? = null
+    private var onItemLongClickListener: ((T) -> Unit)? = null
 
-    fun setOnItemLongClickListener(listener: (T, View) -> Unit) {
+    fun setOnItemViewLongClickListener(listener: (T, View) -> Unit) {
+        onItemViewLongClickListener = listener
+    }
+
+    fun setOnItemLongClickListener(listener: (T) -> Unit) {
         onItemLongClickListener = listener
+    }
+
+    private var doubleClickTimeout: Long = 300L
+
+    private var onItemViewDoubleClickListener: ((T, View) -> Unit)? = null
+    private var onItemDoubleClickListener: ((T) -> Unit)? = null
+
+    fun setOnItemViewDoubleClickListener(listener: (T, View) -> Unit) {
+        onItemViewDoubleClickListener = listener
+    }
+
+    fun setOnItemDoubleClickListener(listener: (T) -> Unit) {
+        onItemDoubleClickListener = listener
+    }
+
+    open fun setDoubleClickTimeout(timeout: Long) {
+        doubleClickTimeout = timeout
     }
 
     override fun getItemCount() = differ.currentList.size
@@ -59,18 +86,73 @@ abstract class BaseAdapter<T: Any, VB: ViewBinding>(
     }
 
     private fun setClickListenerForView(item: T, view: View) {
-        if (view is ViewGroup) {
-            for (i in 0 until view.childCount) {
-                val child = view.getChildAt(i)
-                setClickListenerForView(item,child)
+        var lastClickTime = 0L
+        var clickCount = 0
+
+        val clickRunnable = Runnable {
+            if (clickCount == 1) {
+                onItemViewClickListener?.invoke(item, view)
+                onItemClickListener?.invoke(item)
+            } else if (clickCount == 2) {
+                onItemViewDoubleClickListener?.invoke(item, view)
+                onItemDoubleClickListener?.invoke(item)
             }
-        } else {
+            clickCount = 0
+        }
+
+        val isDoubleClickEnabled = onItemViewDoubleClickListener != null || onItemDoubleClickListener != null
+
+        if (view.parent == null) {
             view.setOnClickListener {
-                onItemClickListener?.invoke(item, it)
+                if (isDoubleClickEnabled) {
+                    val currentTime = System.currentTimeMillis()
+                    if (currentTime - lastClickTime < doubleClickTimeout) {
+                        clickCount++
+                        view.removeCallbacks(clickRunnable)
+                    } else {
+                        clickCount = 1
+                    }
+                    lastClickTime = currentTime
+                    view.postDelayed(clickRunnable, doubleClickTimeout)
+                } else {
+                    onItemViewClickListener?.invoke(item, it)
+                    onItemClickListener?.invoke(item)
+                }
             }
 
             view.setOnLongClickListener {
-                onItemLongClickListener?.invoke(item, it)
+                onItemViewLongClickListener?.invoke(item, it)
+                onItemLongClickListener?.invoke(item)
+                true
+            }
+        }
+
+        if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                val child = view.getChildAt(i)
+                setClickListenerForView(item, child)
+            }
+        } else {
+            view.setOnClickListener {
+                if (isDoubleClickEnabled) {
+                    val currentTime = System.currentTimeMillis()
+                    if (currentTime - lastClickTime < doubleClickTimeout) {
+                        clickCount++
+                        view.removeCallbacks(clickRunnable)
+                    } else {
+                        clickCount = 1
+                    }
+                    lastClickTime = currentTime
+                    view.postDelayed(clickRunnable, doubleClickTimeout)
+                } else {
+                    onItemViewClickListener?.invoke(item, it)
+                    onItemClickListener?.invoke(item)
+                }
+            }
+
+            view.setOnLongClickListener {
+                onItemViewLongClickListener?.invoke(item, it)
+                onItemLongClickListener?.invoke(item)
                 true
             }
         }
@@ -232,6 +314,3 @@ abstract class BaseAdapter<T: Any, VB: ViewBinding>(
         submitList(emptyList())
     }
 }
-
-
-

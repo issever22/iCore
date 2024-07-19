@@ -96,8 +96,11 @@ fun View.slideOutToLeft(onEnd: (() -> Unit)? = null) {
 }
 
 fun ImageView.likeAnimation(
+    isLiked: Boolean,
     onLikeStart: (() -> Unit)? = null,
-    onDislikeStart: (() -> Unit)? = null
+    onDislikeStart: (() -> Unit)? = null,
+    @DrawableRes likeDrawable: Int? = null,
+    @DrawableRes dislikeDrawable: Int? = null,
 ) {
     val duration = 500L
     val scaleDown = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.5f)
@@ -111,30 +114,24 @@ fun ImageView.likeAnimation(
 
     animator.addListener(object : Animator.AnimatorListener {
         override fun onAnimationStart(animation: Animator) {
-            if (this@likeAnimation.tag == null || this@likeAnimation.tag == true) {
-                onLikeStart?.invoke()
-            } else {
+            if (isLiked) {
                 onDislikeStart?.invoke()
+            } else {
+                onLikeStart?.invoke()
             }
         }
 
         override fun onAnimationEnd(animation: Animator) {
-            // not needed for this animation
-        }
-
-        override fun onAnimationCancel(animation: Animator) {
-            // not needed for this animation
-        }
-
-        override fun onAnimationRepeat(animation: Animator) {
-            if (this@likeAnimation.tag == null || this@likeAnimation.tag == true) {
-                this@likeAnimation.setImageResource(R.drawable.ic_heart)
-                this@likeAnimation.tag = false
+            if (isLiked) {
+                this@likeAnimation.setImageResource(likeDrawable ?: R.drawable.ic_heart)
             } else {
-                this@likeAnimation.setImageResource(R.drawable.ic_heart_selected)
-                this@likeAnimation.tag = true
+                this@likeAnimation.setImageResource(dislikeDrawable ?: R.drawable.ic_heart_selected)
             }
         }
+
+        override fun onAnimationCancel(animation: Animator) {}
+
+        override fun onAnimationRepeat(animation: Animator) {}
     })
 
     animator.start()

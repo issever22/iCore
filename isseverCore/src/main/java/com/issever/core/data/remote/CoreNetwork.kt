@@ -23,11 +23,11 @@ object CoreNetwork {
     }
 
     private val loggingInterceptor: HttpLoggingInterceptor by lazy {
-        HttpLoggingInterceptor().apply {
-            if (ResourceProvider.getBoolean(R.bool.IS_DEBUG)) {
-                level = HttpLoggingInterceptor.Level.BODY
-            }
+        val loggingInterceptor = HttpLoggingInterceptor()
+        if (ResourceProvider.getBoolean(R.bool.IS_DEBUG)) {
+            loggingInterceptor.apply { level = HttpLoggingInterceptor.Level.BODY }
         }
+        return@lazy loggingInterceptor
     }
 
     private fun createClient(headers: Map<String, String>): OkHttpClient {
