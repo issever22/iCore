@@ -230,13 +230,17 @@ val adapter = YourAdapter()
 binding.recyclerView.adapter = adapter
 adapter.submitList(yourList)
 
+adapter.setOnItemClickListener { item ->
+    // Do something with item
+}
+
 // `view` is the specific View within the item layout that was clicked.
 // This allows you to perform actions or access properties of the clicked View directly.
-adapter.setOnItemClickListener { item, view ->
-    // Do something with item or view
-}
-adapter.setOnItemLongClickListener { item, view ->
-    // Do something with item or view
+adapter.setOnItemViewClickListener { item, view ->
+    when (view.id) {
+        R.id.someId -> //Do something
+        else -> //Do something
+    } 
 }
 ```
 
