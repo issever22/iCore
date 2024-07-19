@@ -267,7 +267,7 @@ Create a remote data source class by extending `BaseRemoteData`:
 class SomeRemoteData(private val service: SomeService) : BaseRemoteData {
 
     suspend fun login(user: SomeRequestModel): Resource<SomeResponseModel> {
-        return responseHandler({ service.login(user) }
+        return responseHandler({ service.login(user) })
     }
 
     // If needed, you can add additional actions or convert the response body to the desired entity.
