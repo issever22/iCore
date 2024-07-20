@@ -238,8 +238,8 @@ adapter.setOnItemClickListener { item ->
 // This allows you to perform actions or access properties of the clicked View directly.
 adapter.setOnItemViewClickListener { item, view ->
     when (view.id) {
-        R.id.someId -> //Do something
-        else -> //Do something
+        R.id.someId -> //Some View clicked
+        else -> //Root clicked
     } 
 }
 ```
