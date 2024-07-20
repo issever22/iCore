@@ -239,7 +239,7 @@ adapter.setOnItemClickListener { item ->
 adapter.setOnItemViewClickListener { item, view ->
     when (view.id) {
         R.id.someId -> //Some View clicked
-        else -> //Root clicked
+        else -> //Root View clicked
     } 
 }
 ```
