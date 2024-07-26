@@ -10,12 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.issever.core.data.initialization.IsseverCore
 
-abstract class BaseAdapter<T: Any, VB: ViewBinding>(
+abstract class BaseAdapter<T : Any, VB : ViewBinding>(
     private val bindingInflater: (LayoutInflater, ViewGroup, Boolean) -> VB
 ) : RecyclerView.Adapter<BaseAdapter<T, VB>.BaseViewHolder>() {
 
     open val coreLocalData: BaseLocalData by lazy { IsseverCore.getBaseLocalData() }
-    inner class BaseViewHolder(val binding: VB): RecyclerView.ViewHolder(binding.root)
+
+    inner class BaseViewHolder(val binding: VB) : RecyclerView.ViewHolder(binding.root)
 
     open val differ by lazy {
         AsyncListDiffer(this, object : DiffUtil.ItemCallback<T>() {
@@ -30,7 +31,10 @@ abstract class BaseAdapter<T: Any, VB: ViewBinding>(
     }
 
     private var onItemViewClickListener: ((T, View) -> Unit)? = null
+    protected fun getViewClickListener(): ((T, View) -> Unit)? = onItemViewClickListener
+
     private var onItemClickListener: ((T) -> Unit)? = null
+    protected fun getClickListener(): ((T) -> Unit)? = onItemClickListener
 
     fun setOnItemViewClickListener(listener: (T, View) -> Unit) {
         onItemViewClickListener = listener
@@ -41,7 +45,10 @@ abstract class BaseAdapter<T: Any, VB: ViewBinding>(
     }
 
     private var onItemViewLongClickListener: ((T, View) -> Unit)? = null
+    protected fun getViewLongClickListener(): ((T, View) -> Unit)? = onItemViewLongClickListener
+
     private var onItemLongClickListener: ((T) -> Unit)? = null
+    protected fun getLongClickListener(): ((T) -> Unit)? = onItemLongClickListener
 
     fun setOnItemViewLongClickListener(listener: (T, View) -> Unit) {
         onItemViewLongClickListener = listener
@@ -52,9 +59,13 @@ abstract class BaseAdapter<T: Any, VB: ViewBinding>(
     }
 
     private var doubleClickTimeout: Long = 300L
+    private var lastClickTime: Long = 0L
 
     private var onItemViewDoubleClickListener: ((T, View) -> Unit)? = null
+    protected fun getViewDoubleClickListener(): ((T, View) -> Unit)? = onItemViewDoubleClickListener
+
     private var onItemDoubleClickListener: ((T) -> Unit)? = null
+    protected fun getDoubleClickListener(): ((T) -> Unit)? = onItemDoubleClickListener
 
     fun setOnItemViewDoubleClickListener(listener: (T, View) -> Unit) {
         onItemViewDoubleClickListener = listener
@@ -80,48 +91,61 @@ abstract class BaseAdapter<T: Any, VB: ViewBinding>(
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val item = getItem(position)
-        bind(holder, item,holder.binding.root.context)
+        bind(holder, item, holder.binding.root.context)
 
-        setClickListenerForView(item,holder.binding.root)
+        setClickListenerForView(item, holder.binding.root)
     }
 
+    private val originalClickListeners = mutableMapOf<View, View.OnClickListener?>()
+
+    private val originalLongClickListeners = mutableMapOf<View, View.OnLongClickListener?>()
+
     private fun setClickListenerForView(item: T, view: View) {
-        var lastClickTime = 0L
-        var clickCount = 0
-
-        val clickRunnable = Runnable {
-            if (clickCount == 1) {
-                onItemViewClickListener?.invoke(item, view)
-                onItemClickListener?.invoke(item)
-            } else if (clickCount == 2) {
-                onItemViewDoubleClickListener?.invoke(item, view)
-                onItemDoubleClickListener?.invoke(item)
-            }
-            clickCount = 0
-        }
-
-        val isDoubleClickEnabled = onItemViewDoubleClickListener != null || onItemDoubleClickListener != null
-
-        if (view.parent == null) {
-            view.setOnClickListener {
-                if (isDoubleClickEnabled) {
-                    val currentTime = System.currentTimeMillis()
-                    if (currentTime - lastClickTime < doubleClickTimeout) {
-                        clickCount++
-                        view.removeCallbacks(clickRunnable)
-                    } else {
-                        clickCount = 1
-                    }
-                    lastClickTime = currentTime
-                    view.postDelayed(clickRunnable, doubleClickTimeout)
-                } else {
-                    onItemViewClickListener?.invoke(item, it)
-                    onItemClickListener?.invoke(item)
+        if (view.id != View.NO_ID || view.parent == null) {
+            if (!originalClickListeners.containsKey(view)) {
+                originalClickListeners[view] = try {
+                    val field = View::class.java.getDeclaredField("mListenerInfo")
+                    field.isAccessible = true
+                    val listenerInfo = field.get(view)
+                    val listenerField = listenerInfo.javaClass.getDeclaredField("mOnClickListener")
+                    listenerField.isAccessible = true
+                    listenerField.get(listenerInfo) as? View.OnClickListener
+                } catch (e: Exception) {
+                    null
                 }
             }
 
+            if (!originalLongClickListeners.containsKey(view)) {
+                originalLongClickListeners[view] = try {
+                    val field = View::class.java.getDeclaredField("mListenerInfo")
+                    field.isAccessible = true
+                    val listenerInfo = field.get(view)
+                    val listenerField =
+                        listenerInfo.javaClass.getDeclaredField("mOnLongClickListener")
+                    listenerField.isAccessible = true
+                    listenerField.get(listenerInfo) as? View.OnLongClickListener
+                } catch (e: Exception) {
+                    null
+                }
+            }
+
+            view.setOnClickListener {
+                originalClickListeners[view]?.onClick(view)
+
+                val currentTime = System.currentTimeMillis()
+                if (currentTime - lastClickTime < doubleClickTimeout) {
+                    onItemViewDoubleClickListener?.invoke(item, view)
+                    onItemDoubleClickListener?.invoke(item)
+                } else {
+                    onItemViewClickListener?.invoke(item, view)
+                    onItemClickListener?.invoke(item)
+                }
+                lastClickTime = currentTime
+            }
+
             view.setOnLongClickListener {
-                onItemViewLongClickListener?.invoke(item, it)
+                originalLongClickListeners[view]?.onLongClick(view)
+                onItemViewLongClickListener?.invoke(item, view)
                 onItemLongClickListener?.invoke(item)
                 true
             }
@@ -129,36 +153,12 @@ abstract class BaseAdapter<T: Any, VB: ViewBinding>(
 
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
-                val child = view.getChildAt(i)
-                setClickListenerForView(item, child)
-            }
-        } else {
-            view.setOnClickListener {
-                if (isDoubleClickEnabled) {
-                    val currentTime = System.currentTimeMillis()
-                    if (currentTime - lastClickTime < doubleClickTimeout) {
-                        clickCount++
-                        view.removeCallbacks(clickRunnable)
-                    } else {
-                        clickCount = 1
-                    }
-                    lastClickTime = currentTime
-                    view.postDelayed(clickRunnable, doubleClickTimeout)
-                } else {
-                    onItemViewClickListener?.invoke(item, it)
-                    onItemClickListener?.invoke(item)
-                }
-            }
-
-            view.setOnLongClickListener {
-                onItemViewLongClickListener?.invoke(item, it)
-                onItemLongClickListener?.invoke(item)
-                true
+                setClickListenerForView(item, view.getChildAt(i))
             }
         }
     }
 
-    abstract fun bind(holder: BaseViewHolder,item: T, context: Context)
+    abstract fun bind(holder: BaseViewHolder, item: T, context: Context)
 
     open fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
         return oldItem == newItem

@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## [1.1.2] - 2024-07-26
+### Changed
+- **BaseAdapter**:
+  - Refactored click listener handling to retain original click and long click listeners for views.
+  - Added protected getter functions for `onItemViewClickListener`, `onItemClickListener`, `onItemViewLongClickListener`, `onItemLongClickListener`, `onItemViewDoubleClickListener`, and `onItemDoubleClickListener`.
+  - Improved `setClickListenerForView` method to correctly manage existing click listeners on views.
+
+### Fixed
+- **BaseAdapter**:
+  - Fixed an issue where original click and long click listeners were overridden, leading to unexpected behavior.
+
+### Added
+- **BaseBottomSheetDialogFragment**:
+  - Added `setExpanded()` to expand the bottom sheet.
+  - Added `setCollapsed()` to collapse the bottom sheet.
+  - Added `setBottomSheetHeight(height: Int)` to set the height of the bottom sheet.
+  - Added `dismissBottomSheet()` to hide and dismiss the bottom sheet.
+  - Added `setHalfExpanded()` to half-expand the bottom sheet.
+  - Added `setInteractionEnabled(enabled: Boolean)` to enable or disable user interaction with the bottom sheet.
+  - Added `observeBottomSheetState(onStateChanged: (newState: Int) -> Unit)` to observe state changes of the bottom sheet.
+
 ## [1.1.0] - 2024-07-19
 ### Added
 - **BaseAdapter**

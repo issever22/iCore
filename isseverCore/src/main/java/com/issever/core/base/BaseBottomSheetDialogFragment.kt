@@ -13,7 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.issever.core.data.initialization.IsseverCore
 import com.issever.core.util.extensions.showSnackbar
 
-abstract class BaseBottomSheetDialogFragment<VB : ViewBinding,VM : BaseViewModel?> : BottomSheetDialogFragment() {
+abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : BaseViewModel?> : BottomSheetDialogFragment() {
 
     private var _binding: VB? = null
     open val binding get() = _binding!!
@@ -24,8 +24,9 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding,VM : BaseViewModel
     protected abstract fun initViewBinding(): VB
     protected open fun init() {}
     protected open fun initObservers() {}
-    open var loadingView : View? = null
+    open var loadingView: View? = null
     open lateinit var behavior: BottomSheetBehavior<FrameLayout>
+    open var bottomSheet: FrameLayout? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -38,7 +39,7 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding,VM : BaseViewModel
         super.onViewCreated(view, savedInstanceState)
 
         val dialog = dialog as BottomSheetDialog
-        val bottomSheet = dialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+        bottomSheet = dialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
         behavior = BottomSheetBehavior.from(bottomSheet!!)
 
         init()
@@ -51,6 +52,44 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding,VM : BaseViewModel
         }
 
         initObservers()
+    }
+
+    open fun setExpanded() {
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    open fun setCollapsed() {
+        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+    }
+
+    open fun setBottomSheetHeight(height: Int) {
+        val layoutParams = bottomSheet?.layoutParams
+        layoutParams?.height = height
+        bottomSheet?.layoutParams = layoutParams
+    }
+
+    open fun dismissBottomSheet() {
+        behavior.state = BottomSheetBehavior.STATE_HIDDEN
+        dialog?.dismiss()
+    }
+
+    open fun setHalfExpanded() {
+        behavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+    }
+
+    open fun setInteractionEnabled(enabled: Boolean) {
+        bottomSheet?.isClickable = enabled
+        bottomSheet?.isFocusable = enabled
+    }
+
+    open fun observeBottomSheetState(onStateChanged: (newState: Int) -> Unit) {
+        behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                onStateChanged(newState)
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        })
     }
 
     override fun onDestroyView() {
