@@ -43,7 +43,7 @@ Add the dependency to your module's `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation("com.github.issever22:iCore:v1.1.2")
+    implementation("com.github.issever22:iCore:v1.1.5")
 }
 ```
 
@@ -139,7 +139,7 @@ class YourFragment : BaseFragment<FragmentYourBinding, YourViewModel>() {
         // If needed, set the loading view to be shown during loading states
         loadingView = binding.progressBar
 
-        // If needed, set the back button to navigate up when pressed if needed
+        // If needed, set the back button to navigate up when pressed
         backButton = binding.yourBackButtonImageView
     }
 
@@ -185,23 +185,37 @@ class YourViewModel(
     }
 
     fun sampleFunction() {
-        collectData({
-            // The function to be executed to fetch data from the repository
-            repository.sampleFunction()
-        }, successAction = {
-            // Code to be executed when the data fetching is successful
-            // This is typically where you would handle the successful response
-        }, errorAction = { message, errorBody ->
-            // Code to be executed when there is an error in fetching data
-            // Here you can handle the error
-        }, loadingAction = {
-            // Code to be executed while the data is being loaded
-        }, snackbarType = SnackbarType.DEFAULT,
+        collectData(
+            // Required: The function to be executed to fetch data from the repository
+            operation = {
+                repository.sampleFunction()
+            },
+            // Optional: Action to perform when the data fetching is successful
+            successAction = {
+                // Handle the successful response
+            },
+            // Optional: Action to perform when there is an error in fetching data
+            errorAction = { message, errorBody ->
+                // Handle the error
+            },
+            // Optional: Action to perform while the data is being loaded
+            loadingAction = {
+                // Show loading state
+            },
+            // Optional: Type of Snackbar to display for the error, success, etc.
+            stateType = StateType.DEFAULT,
+            // Optional: Text to display on the Snackbar action button
             actionText = "Action",
+            // Optional: Action to perform when the Snackbar action button is clicked
             snackBarAction = {
-                // Action to be performed when the snackbar action is triggered
-                // This is typically used for actions that the user can perform directly from the snackbar, such as retrying a failed operation
-            })
+                // Perform action when Snackbar action is triggered
+            },
+            // Optional: Lambda to determine whether the error message should be shown
+            shouldShowError = { message, errorBody ->
+                // Return true to show the error, false to suppress it
+                message != "Specific message to suppress"
+            }
+        )
     }
 }
 ```
@@ -312,6 +326,35 @@ class SomeRepository(private val remoteData: SomeRemoteData) : BaseRepository {
 
 iCore provides various useful extension functions. Here are a few examples:
 
+#### Endless Scroll
+
+```kotlin
+// Adds an endless scroll listener to the RecyclerView, enabling infinite scrolling and pull-to-refresh functionality.
+binding.recyclerView.addOnEndlessScrollListener(
+    // Optional: The minimum number of items below your current scroll position before loading more (default is 5).
+    visibleThreshold = 10,
+    // Optional: FloatingActionButton used to scroll the list back to the top.
+    returnToTopFab = binding.fabReturnTop,
+    // Optional: SwipeRefreshLayout that handles the pull-to-refresh gesture.
+    swipeRefreshLayout = binding.swipeRefreshLayout,
+    // Required: Callback invoked when more data needs to be loaded.
+    onLoadMore = { page, totalItemsCount, view ->
+        // Update the current page number.
+        currentPage = page
+        // Fetch more data based on the current page.
+        viewModel.getData(currentPage)
+    },
+    // Optional: Callback invoked when a refresh is requested.
+    onRefresh = {
+        // Reset to the first page.
+        currentPage = 0
+        // Fetch the initial set of data.
+        viewModel.getData(currentPage)
+    }
+)
+
+```
+
 #### Observing LiveData
 
 ```kotlin
@@ -347,20 +390,32 @@ myImageView.loadImage("ImageUrl, ImageUri or ImageSource")
 
 ```kotlin
  showCustomDialog(
-            title = "Title", // Required
-            message = "Message", // Required
-            positiveButtonText = "Positive Button", //Default is "Okay"
-            negativeButtonText = "Negative Button", // Default is "Cancel"
-            useRedPositiveButton = true, //Default is false
-            onPositiveClick = {
-                // Do something
-            },
-            onNegativeClick = {
-                // Do something
-            },
-            customizeView = { dilogViewBindig ->
-                // Do something
-            })
+    // Required: The title of the dialog.
+    title = "Title",
+    // Required: The message to display in the dialog.
+    message = "Message",
+    // Optional: The text for the positive button (default is "Okay").
+    positiveButtonText = "Positive Button",
+    // Optional: The text for the negative button (default is "Cancel").
+    negativeButtonText = "Negative Button",
+    // Optional: The type of dialog to display (SUCCESS, ERROR, WARNING, INFO, or DEFAULT).
+    stateType = StateType.SUCCESS,
+    // Optional: Whether to hide the icon in the dialog (default is false).
+    hideIcon = false,
+    // Optional: Action to perform when the positive button is clicked.
+    onPositiveClick = {
+        // Do something when the positive button is clicked
+    },
+    // Optional: Action to perform when the negative button is clicked.
+    onNegativeClick = {
+        // Do something when the negative button is clicked
+    },
+    // Optional: Additional customization for the dialog view.
+    customizeView = { dialogViewBinding ->
+        // Custom dialog modifications
+    }
+)
+
 ```
 
 For a complete list of extension functions and their usage, please refer to the source code.
