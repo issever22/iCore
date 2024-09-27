@@ -17,7 +17,7 @@
             android:layout_margin="10dp"
             android:textColorHint="@color/c_steel"
             android:background="@color/transparent"
-            android:textColor="@color/c_black_white" />
+            android:textColor="@color/c_midnight" />
 
     </androidx.cardview.widget.CardView>
 

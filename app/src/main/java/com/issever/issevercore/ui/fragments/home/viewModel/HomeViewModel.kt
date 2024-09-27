@@ -2,7 +2,7 @@ package com.issever.issevercore.ui.fragments.home.viewModel
 
 import androidx.lifecycle.LiveData
 import com.issever.core.base.BaseViewModel
-import com.issever.core.data.enums.SnackbarType
+import com.issever.core.data.enums.StateType
 import com.issever.core.util.SingleLiveEvent
 import com.issever.issevercore.data.repository.FactRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +23,7 @@ class HomeViewModel @Inject constructor(
     val showThemeDialog: LiveData<Boolean> get() = _showThemeDialog
 
     // Home Fragment Sample Functions
-    private fun sampleFunction(snackbarType: SnackbarType, actionText: String = "Action") {
+    private fun sampleFunction(stateType: StateType, actionText: String = "Action") {
         collectData({
             // The function to be executed to fetch data from the repository
             repository.sampleFunction()
@@ -35,7 +35,7 @@ class HomeViewModel @Inject constructor(
             // Here you can handle the error
         }, loadingAction = {
             // Code to be executed while the data is being loaded
-        }, snackbarType = snackbarType,
+        }, stateType = stateType,
             actionText = actionText,
             snackBarAction = {
                 // Action to be performed when the snackbar action is triggered
@@ -44,23 +44,23 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getSuccess(){
-        sampleFunction(SnackbarType.SUCCESS)
+        sampleFunction(StateType.SUCCESS)
     }
 
     fun getError(){
-        sampleFunction(SnackbarType.ERROR)
+        sampleFunction(StateType.ERROR)
     }
 
     fun getWarning(){
-        sampleFunction(SnackbarType.WARNING)
+        sampleFunction(StateType.WARNING)
     }
 
     fun getInfo(){
-        sampleFunction(SnackbarType.INFO)
+        sampleFunction(StateType.INFO)
     }
 
     fun getDefault(){
-        sampleFunction(SnackbarType.DEFAULT)
+        sampleFunction(StateType.DEFAULT)
     }
 
     fun navigateToCatFacts() {

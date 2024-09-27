@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Main Colors -->
+    <color name="c_primary">#BFC8D5</color> <!-- Primary Color (Lighter tone in dark theme) -->
+    <color name="c_primary_fixed_dim">#4F5B62</color> <!-- Primary Fixed (Darker tone in dark theme) -->
+
+    <!-- Secondary Colors -->
+    <color name="c_secondary">#B1BDCE</color> <!-- Secondary Color (Lighter tone in dark theme) -->
+    <color name="c_secondary_fixed_dim">#939EAE</color> <!-- Secondary Fixed (Medium tone in dark theme) -->
+
+    <!-- Accent Colors -->
+    <color name="c_tertiary">#A7B4C5</color> <!-- Tertiary Color (Lighter tone in dark theme) -->
+
+</resources>

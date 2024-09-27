@@ -1,22 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="c_secondary">#FE713A</color>
-    <color name="c_primary">#F24048</color>
-    <color name="c_status_bar">#FE7139</color>
-    <color name="c_navigation_bar">#E50F56</color>
 
-    <color name="c_black_white">#FFFFFF</color>
-    <color name="c_lavender">#262730</color>
-    <color name="c_snow">#12131A</color>
-    <color name="c_midnight">#FDFDFD</color>
-    <color name="c_state">#C7C7C7</color>
-    <color name="c_navy">#F5F5F5</color>
-    <color name="c_alice">#191A21</color>
-    <color name="c_moe">#E0E0E0</color>
-    <color name="c_ghost">#202129</color>
-    <color name="c_gainsboro">#81838F</color>
-    <color name="c_steel">#A9AAAC</color>
-    <color name="c_slate">#C7C7C7</color>
-    <color name="c_silver">#44454D</color>
+    <!-- Basic Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+
+    <!-- Theme-Specific Colors -->
+    <color name="c_black">#FFFFFF</color> <!-- Black (In dark mode, mapped to white for contrast) -->
+    <color name="c_white">#000000</color> <!-- White (In dark mode, mapped to black) -->
+    <color name="c_grey_light">#1A1B1D</color> <!-- Light Grey (Dark grey in dark mode) -->
+    <color name="c_grey_medium">#44454D</color> <!-- Medium Grey (Darker grey tones in dark mode) -->
+    <color name="c_grey_alt">#81838F</color> <!-- Alternate Grey (Darker tone in dark mode) -->
+    <color name="c_grey_dark">#CBD5E1</color> <!-- Dark Grey (Light grey in dark mode) -->
+    <color name="c_charcoal">#C7C7C7</color> <!-- Charcoal Grey (Light grey in dark mode) -->
+    <color name="c_grey_tank">#CCCCCC</color> <!-- Tank Grey (Light grey in dark mode) -->
+    <color name="c_moe">#E0E0E0</color> <!-- Gunmetal (Light grey in dark mode) -->
+    <color name="c_navy">#F5F5F5</color> <!-- Navy Blue (Light grey in dark mode) -->
+    <color name="c_midnight">#FDFDFD</color> <!-- Midnight (Lightest grey in dark mode) -->
+    <color name="c_silver">#44454D</color> <!-- Silver (Dark grey in dark mode) -->
+    <color name="c_steel">#A9AAAC</color> <!-- Steel Grey (Medium grey in dark mode) -->
+    <color name="c_outline_grey">#262730</color> <!-- Outline Grey (Dark grey in dark mode) -->
+    <color name="c_shadow">#80000000</color> <!-- Shadow -->
+
+    <!-- Status Colors -->
+    <color name="c_green">#20C662</color> <!-- Success Green (Unchanged) -->
+    <color name="c_blue">#2196F3</color> <!-- Information Blue (Unchanged) -->
+    <color name="c_orange">#EC9A39</color> <!-- Warning Orange (Unchanged) -->
+    <color name="c_red">#D32F2F</color> <!-- Error Red (Unchanged) -->
+    <color name="c_red_light">#FD5757</color> <!-- Light Red (Unchanged) -->
+    <color name="c_red_container">#3B1818</color> <!-- Error Container (Dark red in dark mode) -->
+    <color name="c_on_error_container">#F9DEDC</color> <!-- On Error Container (Light red in dark mode) -->
+
+    <!-- Surface Colors -->
+    <color name="c_surface_dim">#2A2B33</color> <!-- Dim Surface -->
+    <color name="c_surface_bright">#1F2027</color> <!-- Bright Surface -->
+    <color name="c_surface_container_high">#32333C</color> <!-- High Surface Container -->
+    <color name="c_surface_container_highest">#383944</color> <!-- Highest Surface Container -->
+    <color name="c_surface_container_lowest">#16171E</color> <!-- Lowest Surface Container -->
 
 </resources>

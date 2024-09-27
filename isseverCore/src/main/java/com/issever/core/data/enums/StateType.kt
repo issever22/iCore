@@ -1,6 +1,6 @@
 package com.issever.core.data.enums
 
-enum class SnackbarType {
+enum class StateType {
     SUCCESS,
     ERROR,
     INFO,

@@ -19,8 +19,8 @@ class FactRepository @Inject constructor(
         })
     }
 
-    suspend fun getFacts(): Flow<Resource<CatFactsResponse>> {
-        return emitResult({ remoteData.getFacts() })
+    suspend fun getFacts(page : Int): Flow<Resource<CatFactsResponse>> {
+        return emitResult({ remoteData.getFacts(page) })
     }
 
     suspend fun getFavoriteCatFact(): Flow<Resource<CatFact>> {

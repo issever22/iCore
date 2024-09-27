@@ -1,16 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.IsseverCore" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+
+    <!-- Base application theme -->
+    <style name="Theme.IsseverCore" parent="Theme.Material3.Light.NoActionBar">
+        <!-- General settings -->
+        <item name="windowActionModeOverlay">true</item> <!-- Display action mode overlay on top of the window -->
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item> <!-- Action mode close icon -->
+        <item name="android:backgroundDimEnabled">true</item> <!-- Dim the background -->
+        <item name="fontFamily">@font/outfit_regular</item> <!-- Global application font -->
+        <item name="android:windowAnimationStyle">@style/WindowTransition</item> <!-- Window transition animations -->
+        <item name="cardViewStyle">@style/CardViewStyle</item> <!-- Card view styles -->
+
+        <!-- Primary colors -->
+        <item name="colorPrimary">@color/c_primary</item> <!-- Primary color -->
+        <item name="colorOnPrimary">@color/c_grey_light</item> <!-- Color for text/icons on primary color -->
+        <item name="colorPrimaryContainer">@color/c_grey_medium</item> <!-- Light tone for primary color -->
+        <item name="colorOnPrimaryContainer">@color/c_grey_dark</item> <!-- Text/icon color on primary container -->
+        <item name="colorPrimaryFixed">@color/c_grey_medium</item> <!-- Fixed primary color -->
+        <item name="colorOnPrimaryFixed">@color/c_grey_dark</item> <!-- Text/icon color on fixed primary color -->
+        <item name="colorPrimaryFixedDim">@color/c_primary_fixed_dim</item> <!-- Darker tone for fixed primary color -->
+        <item name="colorOnPrimaryFixedVariant">@color/c_primary</item> <!-- Text/icon color on fixed primary variant -->
+
+        <!-- Secondary colors -->
+        <item name="colorSecondary">@color/c_secondary</item> <!-- Secondary accent color -->
+        <item name="colorOnSecondary">@color/c_white</item> <!-- Color for text/icons on secondary color -->
+        <item name="colorSecondaryContainer">@color/c_tertiary</item> <!-- Light tone for secondary color -->
+        <item name="colorOnSecondaryContainer">@color/c_grey_dark</item> <!-- Text/icon color on secondary container -->
+        <item name="colorSecondaryFixed">@color/c_tertiary</item> <!-- Fixed secondary color -->
+        <item name="colorOnSecondaryFixed">@color/c_grey_dark</item> <!-- Text/icon color on fixed secondary color -->
+        <item name="colorSecondaryFixedDim">@color/c_secondary_fixed_dim</item> <!-- Darker tone for fixed secondary color -->
+        <item name="colorOnSecondaryFixedVariant">@color/c_primary</item> <!-- Text/icon color on fixed secondary variant -->
+
+        <!-- Tertiary colors -->
+        <item name="colorTertiary">@color/c_tertiary</item> <!-- Tertiary accent color -->
+        <item name="colorOnTertiary">@color/c_white</item> <!-- Color for text/icons on tertiary color -->
+        <item name="colorTertiaryContainer">@color/c_grey_medium</item> <!-- Light tone for tertiary color -->
+        <item name="colorOnTertiaryContainer">@color/c_grey_dark</item> <!-- Text/icon color on tertiary container -->
+        <item name="colorTertiaryFixed">@color/c_grey_medium</item> <!-- Fixed tertiary color -->
+        <item name="colorOnTertiaryFixed">@color/c_grey_dark</item> <!-- Text/icon color on fixed tertiary color -->
+        <item name="colorTertiaryFixedDim">@color/c_primary_fixed_dim</item> <!-- Darker tone for fixed tertiary color -->
+        <item name="colorOnTertiaryFixedVariant">@color/c_primary</item> <!-- Text/icon color on fixed tertiary variant -->
+
+        <!-- Error colors -->
+        <item name="colorError">@color/c_red</item> <!-- Error state color -->
+        <item name="colorOnError">@color/c_white</item> <!-- Color for text/icons on error color -->
+        <item name="colorErrorContainer">@color/c_red_container</item> <!-- Light tone for error color -->
+        <item name="colorOnErrorContainer">@color/c_on_error_container</item> <!-- Text/icon color on error container -->
+
+        <!-- Background and surface colors -->
+        <item name="android:colorBackground">@color/c_surface_container_lowest</item> <!-- Application background -->
+        <item name="android:windowBackground">@color/c_surface_container_lowest</item> <!-- Application background -->
+        <item name="colorOnBackground">@color/c_midnight</item> <!-- Color for text/icons on background -->
+        <item name="colorSurface">@color/c_surface_bright</item> <!-- Color for surfaces -->
+        <item name="colorOnSurface">@color/c_midnight</item> <!-- Color for text/icons on surfaces -->
+        <item name="colorSurfaceVariant">@color/c_outline_grey</item> <!-- Alternative color for surfaces -->
+        <item name="colorOnSurfaceVariant">@color/c_midnight</item> <!-- Text/icon color on alternative surface -->
+        <item name="colorSurfaceDim">@color/c_surface_dim</item> <!-- Low contrast surface color -->
+        <item name="colorSurfaceBright">@color/c_surface_bright</item> <!-- Bright surface color -->
+        <item name="colorSurfaceContainerHigh">@color/c_surface_container_high</item> <!-- High priority surface color -->
+        <item name="colorSurfaceContainerLow">@color/c_grey_dark</item> <!-- Low priority surface color -->
+        <item name="colorSurfaceContainer">@color/c_surface_container_highest</item> <!-- General surface container color -->
+        <item name="colorSurfaceContainerHighest">@color/c_surface_container_highest</item> <!-- Highest priority surface color -->
+        <item name="colorSurfaceContainerLowest">@color/c_surface_container_lowest</item> <!-- Lowest priority surface color -->
+
+        <!-- Other colors -->
+        <item name="colorOutline">@color/c_outline_grey</item> <!-- Color for borders and thin lines -->
+        <item name="colorOutlineVariant">@color/c_outline_grey</item> <!-- Alternative color for borders -->
+
+        <!-- Inverse colors for dark theme -->
+        <item name="colorSurfaceInverse">@color/c_surface_container_lowest</item> <!-- Surface color for dark theme -->
+        <item name="colorOnSurfaceInverse">@color/c_midnight</item> <!-- Text/icon color on dark surface -->
+        <item name="colorPrimaryInverse">@color/c_midnight</item> <!-- Primary accent color for dark theme -->
+
+        <!-- Dynamic color overlay for Android 12+ -->
+        <item name="dynamicColorThemeOverlay">@style/Theme.Material3.DynamicColors.Light.NoActionBar</item> <!-- Dynamic colors, Android 12 and above -->
     </style>
+
+    <style name="CardViewStyle">
+        <item name="cardBackgroundColor">@color/c_surface_bright</item>
+        <item name="cardElevation">4dp</item>
+        <item name="android:shadowColor">@color/c_shadow</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">5</item>
+        <item name="cardCornerRadius">20dp</item>
+    </style>
+
+    <style name="WindowTransition">
+        <item name="android:activityOpenEnterAnimation">@anim/pull_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/push_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/pull_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/push_out_right</item>
+    </style>
+
 </resources>

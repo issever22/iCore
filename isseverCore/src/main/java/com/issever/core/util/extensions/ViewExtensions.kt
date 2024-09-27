@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.content.Context
+import android.graphics.Color
 import android.transition.Slide
 import android.transition.Transition
 import android.transition.TransitionManager
@@ -18,17 +19,47 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
-import com.bumptech.glide.load.DecodeFormat
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.DownsampleStrategy
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.bumptech.glide.Glide
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.issever.core.R
-import com.issever.core.data.enums.SnackbarType
+import com.issever.core.data.enums.StateType
 import com.issever.core.data.model.SnackbarMessage
-import com.issever.core.util.GlideApp
+import com.issever.core.util.EndlessRecyclerViewScrollListener
 import com.issever.core.util.ResourceProvider
+
+fun RecyclerView.addOnEndlessScrollListener(
+    visibleThreshold: Int = 5,
+    swipeRefreshLayout: SwipeRefreshLayout? = null,
+    returnToTopFab: FloatingActionButton? = null,
+    onLoadMore: (page: Int, totalItemsCount: Int, view: RecyclerView) -> Unit,
+    onRefresh: (() -> Unit)? = null
+): EndlessRecyclerViewScrollListener {
+    val layoutManager = this.layoutManager
+        ?: throw IllegalStateException("RecyclerView needs a LayoutManager")
+
+    val scrollListener = object : EndlessRecyclerViewScrollListener(
+        this,
+        layoutManager,
+        visibleThreshold,
+        swipeRefreshLayout,
+        returnToTopFab
+    ) {
+        override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+            onLoadMore(page, totalItemsCount, view)
+        }
+
+        override fun onRefresh() {
+            onRefresh?.invoke()
+        }
+    }
+    this.addOnScrollListener(scrollListener)
+    return scrollListener
+}
+
 
 fun View.clickAnim() {
     this.animate()
@@ -176,31 +207,40 @@ fun ImageView.loadImage(
     source: Any,
     overrideWidth: Int? = null,
     overrideHeight: Int? = null,
-    quality: Int = 50,
-    placeHolder :Boolean = false
+    quality: Int? = null,
+    placeHolder: Boolean = false,
+    @DrawableRes errorPlaceholder: Int? = null,
+    showLoading: Boolean = false
 ) {
+    val glide = Glide.with(context).load(source)
 
-    val requestOptions = RequestOptions()
+    if (showLoading){
+        glide.placeholder(CircularProgressDrawable(context).apply {
+            strokeWidth = 8f
+            centerRadius = 40f
+            start()
+        })
+    }
+
     if (overrideWidth != null && overrideHeight != null) {
-        requestOptions.override(overrideWidth, overrideHeight)
+        glide.override(overrideWidth, overrideHeight)
     }
     if (placeHolder) {
-        requestOptions.placeholder(R.drawable.ic_image)
-    }
-    requestOptions.apply {
-        encodeQuality(quality)
-        format(DecodeFormat.PREFER_RGB_565)
-        downsample(DownsampleStrategy.AT_LEAST)
-        diskCacheStrategy(DiskCacheStrategy.ALL)
+        glide.placeholder(R.drawable.ic_image)
     }
 
+    if (errorPlaceholder != null) {
+        glide.error(errorPlaceholder)
+    }
 
-    GlideApp.with(this)
-        .load(source)
-        .apply(requestOptions)
-        .transition(DrawableTransitionOptions.withCrossFade())
-        .into(this)
+    if (quality != null) {
+        glide.encodeQuality(quality)
+    }
+
+    glide.into(this)
+
 }
+
 
 fun View.showSnackbar(message: SnackbarMessage) {
     val snackbar = Snackbar.make(this, message.message.toString(), Snackbar.LENGTH_LONG)
@@ -208,42 +248,48 @@ fun View.showSnackbar(message: SnackbarMessage) {
         snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
     val actionView =
         snackbar.view.findViewById<Button>(com.google.android.material.R.id.snackbar_action)
-    snackbar.setTextColor(ContextCompat.getColor(context, R.color.c_white))
+    snackbar.setTextColor(ContextCompat.getColor(context, R.color.c_midnight))
 
     with(snackbar.view) {
         when (message.type) {
-            SnackbarType.SUCCESS -> snackbar.setTheme(
-                R.color.c_success,
+            StateType.SUCCESS -> snackbar.setTheme(
+                R.color.c_green,
                 textView,
                 R.drawable.ic_check
             )
 
-            SnackbarType.ERROR -> snackbar.setTheme(
-                R.color.c_error,
+            StateType.ERROR -> snackbar.setTheme(
+                R.color.c_red,
                 textView,
                 R.drawable.ic_error
             )
 
-            SnackbarType.INFO -> snackbar.setTheme(
-                R.color.c_info,
+            StateType.INFO -> snackbar.setTheme(
+                R.color.c_blue,
                 textView,
                 R.drawable.ic_info
             )
 
-            SnackbarType.WARNING -> snackbar.setTheme(
-                R.color.c_warning,
+            StateType.WARNING -> snackbar.setTheme(
+                R.color.c_orange,
                 textView,
                 R.drawable.ic_warning
             )
 
-            else -> setBackgroundColor(ContextCompat.getColor(context, R.color.c_default))
+            else -> {
+                setBackgroundColor(ContextCompat.getColor(context, R.color.c_grey_tank))
+            }
         }
     }
 
     if (!message.actionText.isNullOrEmpty() && message.action != null) {
         actionView.apply {
             visibility = View.VISIBLE
-            setTextColor(ContextCompat.getColor(context, R.color.c_white))
+            if (message.type == StateType.DEFAULT){
+                setTextColor(ContextCompat.getColor(context, R.color.c_midnight))
+            }else{
+                setTextColor(Color.WHITE)
+            }
             text = message.actionText
             setOnClickListener { message.action.invoke() }
         }
@@ -258,6 +304,8 @@ fun View.showSnackbar(message: SnackbarMessage) {
 fun Snackbar.setTheme(color: Int, textView: TextView, @DrawableRes icon: Int) {
     setBackgroundTint(ContextCompat.getColor(context, color))
     val drawable = ContextCompat.getDrawable(textView.context, icon)
+    drawable?.setTint(Color.WHITE)
+    setTextColor(Color.WHITE)
     textView.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, null, null, null)
     textView.compoundDrawablePadding =
         textView.resources.getDimensionPixelSize(R.dimen.snackbar_icon_padding)
@@ -266,12 +314,14 @@ fun Snackbar.setTheme(color: Int, textView: TextView, @DrawableRes icon: Int) {
 
 fun View.showKeyboard() {
     this.requestFocus()
-    val imm = ResourceProvider.getAppContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val imm = ResourceProvider.getAppContext()
+        .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
 }
 
 fun View.hideKeyboard() {
-    val imm = ResourceProvider.getAppContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val imm = ResourceProvider.getAppContext()
+        .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(this.windowToken, 0)
 }
 

@@ -1,5 +1,6 @@
 package com.issever.issevercore.ui.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.issever.core.base.BaseViewModel
@@ -20,11 +21,12 @@ class MainViewModel @Inject constructor(
     private val _showFavoriteFact = SingleLiveEvent<CatFact>()
     val showFavoriteFact: LiveData<CatFact> get() = _showFavoriteFact
 
-    fun getCatFacts() {
+    fun getCatFacts(page : Int) {
         collectData({
-            repository.getFacts()
+            repository.getFacts(page)
         }, {
             _facts.value = it?.data
+            Log.e("CatFacts", _facts.value.toString())
         })
     }
 

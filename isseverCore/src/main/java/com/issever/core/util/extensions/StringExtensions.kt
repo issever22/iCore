@@ -4,7 +4,7 @@ import android.os.Build
 import android.util.Patterns
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.issever.core.data.enums.SnackbarType
+import com.issever.core.data.enums.StateType
 import com.issever.core.data.model.SnackbarMessage
 import com.issever.core.util.CoreErrors.INVALID_URL
 import com.issever.core.util.ResourceProvider
@@ -47,7 +47,7 @@ fun String.isValidAndFormatUrl(onValidUrl: (String) -> Unit, onError: (SnackbarM
     } else {
         val message = SnackbarMessage(
             INVALID_URL,
-            SnackbarType.WARNING
+            StateType.WARNING
         )
         onError(message)
     }

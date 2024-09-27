@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -25,10 +24,13 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isGone
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.issever.core.R
+import com.issever.core.data.enums.StateType
 import com.issever.core.data.enums.Theme
 import com.issever.core.data.localData.CoreLocalData
 import com.issever.core.databinding.DialogCustomBinding
@@ -40,7 +42,8 @@ fun AppCompatActivity.showCustomDialog(
     negativeButtonText: String? = null,
     onPositiveClick: (() -> Unit)? = null,
     onNegativeClick: (() -> Unit)? = null,
-    useRedPositiveButton: Boolean = false,
+    stateType: StateType = StateType.DEFAULT,
+    hideIcon: Boolean = false,
     customizeView: (DialogCustomBinding) -> Unit = {},
 ) {
     val dialogView = DialogCustomBinding.inflate(layoutInflater)
@@ -49,12 +52,36 @@ fun AppCompatActivity.showCustomDialog(
         .setView(dialogView.root).create()
     dialog.window?.setBackgroundDrawableResource(R.color.transparent)
     dialogView.apply {
-        if (useRedPositiveButton) {
-            btnPositive.setBackgroundResource(R.drawable.bg_red_alpha)
-            btnPositive.setTextColor(getColor(R.color.c_red))
-        } else {
-            btnPositive.setBackgroundResource(R.drawable.bg_green_alpha)
-            btnPositive.setTextColor(getColor(R.color.c_green))
+        when (stateType) {
+            StateType.SUCCESS -> {
+                ivIcon.isVisible = !hideIcon
+                ivIcon.setImageResource(R.drawable.ic_check)
+                btnPositive.setBackgroundResource(R.drawable.bg_green_alpha_r20)
+                btnPositive.setTextColor(getColor(R.color.c_green))
+            }
+            StateType.ERROR -> {
+                ivIcon.isVisible = !hideIcon
+                ivIcon.setImageResource(R.drawable.ic_error)
+                btnPositive.setBackgroundResource(R.drawable.bg_red_alpha_r20)
+                btnPositive.setTextColor(getColor(R.color.c_red))
+            }
+            StateType.WARNING -> {
+                ivIcon.isVisible = !hideIcon
+                ivIcon.setImageResource(R.drawable.ic_warning)
+                btnPositive.setBackgroundResource(R.drawable.bg_orange_alpha_r20)
+                btnPositive.setTextColor(getColor(R.color.c_orange))
+            }
+            StateType.INFO -> {
+                ivIcon.isVisible = !hideIcon
+                ivIcon.setImageResource(R.drawable.ic_info)
+                btnPositive.setBackgroundResource(R.drawable.bg_blue_alpha_r20)
+                btnPositive.setTextColor(getColor(R.color.c_blue))
+            }
+            StateType.DEFAULT -> {
+                ivIcon.isVisible = false
+                btnPositive.setBackgroundResource(R.drawable.bg_green_alpha_r20)
+                btnPositive.setTextColor(getColor(R.color.c_green))
+            }
         }
         tvTitle.text = title
         tvMessage.text = message
@@ -70,62 +97,6 @@ fun AppCompatActivity.showCustomDialog(
         }
         customizeView(dialogView)
     }
-    dialog.show()
-}
-
-fun AppCompatActivity.showPopupWithAction(
-    message: String,
-    title: String = "",
-    isSuccess: Boolean = false,
-    secondButtonText: String = "",
-    firstButtonText: String,
-    callback: (isFirstButtonClick: Boolean) -> Unit
-) {
-
-    val binding = DialogCustomBinding.inflate(this.layoutInflater)
-
-    val builder = AlertDialog.Builder(this, R.style.CustomAlertDialog)
-
-    builder.setView(binding.root)
-
-    builder.setCancelable(false)
-
-    val dialog = builder.create()
-
-    if (dialog.window != null){
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
-    }
-
-    if (isSuccess) {
-        binding.ivIcon.setImageResource(R.drawable.ic_check)
-    } else {
-        binding.ivIcon.setImageResource(R.drawable.ic_info)
-    }
-
-    if (title == "") {
-        binding.tvTitle.isGone = true
-        binding.tvMessage.text = message
-    } else {
-        binding.tvTitle.isGone = false
-        binding.tvTitle.text = title
-        binding.tvMessage.text = message
-    }
-
-    binding.btnPositive.text = firstButtonText
-    binding.btnNegative.text = secondButtonText
-
-    binding.btnNegative.isGone = secondButtonText == ""
-
-    binding.btnNegative.setOnClickListener {
-        callback.invoke(false)
-        dialog.dismiss()
-    }
-
-    binding.btnPositive.setOnClickListener {
-        callback.invoke(true)
-        dialog.dismiss()
-    }
-
     dialog.show()
 }
 
@@ -166,6 +137,38 @@ fun AppCompatActivity.showKeyboard(view: View) {
 fun AppCompatActivity.hideKeyboard(view: View) {
     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+fun AppCompatActivity.hideSystemUI() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        val windowInsetsController = WindowInsetsControllerCompat(window, window.decorView)
+        windowInsetsController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
+    } else {
+        @Suppress("DEPRECATION")
+        window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_FULLSCREEN
+                )
+    }
+}
+
+fun AppCompatActivity.showSystemUI() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        val windowInsetsController = WindowInsetsControllerCompat(window, window.decorView)
+        windowInsetsController.show(WindowInsetsCompat.Type.systemBars())
+    } else {
+        @Suppress("DEPRECATION")
+        window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                )
+    }
 }
 
 fun <T> AppCompatActivity.showChoiceDialog(

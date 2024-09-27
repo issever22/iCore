@@ -1,5 +1,39 @@
 # CHANGELOG
 
+# CHANGELOG
+
+## [1.1.5] - 2024-09-27
+### Added
+- **ActivityExtensions**:
+  - Added `fun AppCompatActivity.hideSystemUI()` method to hide system bars on devices running Android R and above.
+  - Added `fun AppCompatActivity.showSystemUI()` method to show system bars on devices running Android R and above.
+
+- **EndlessRecyclerViewScrollListener**:
+  - Added abstract class `EndlessRecyclerViewScrollListener` for handling endless scrolling, with optional support for a return-to-top `FloatingActionButton` and swipe-to-refresh.
+
+- **Event**:
+  - Added `Event` class to handle content that should only be consumed once. `getContentIfNotHandled()` returns the content only if it hasn’t been consumed, while `peekContent()` returns the content regardless.
+
+- **ViewExtensions**:
+  - Added `RecyclerView.addOnEndlessScrollListener()` function to add an endless scrolling listener with optional `SwipeRefreshLayout` and return-to-top `FloatingActionButton`.
+
+### Changed
+- **ActivityExtensions**:
+  - Updated `fun AppCompatActivity.showCustomDialog` function to include `stateType` and `hideIcon` parameters. Now supports showing different icons for success, error, warning, or info states, with an option to hide the icon.
+
+- **BaseViewModel**:
+  - Updated the `collectData` function. The `snackbarType` parameter was renamed to `stateType`, and a new `shouldShowError` parameter was added to control whether an error message should be shown.
+
+- **StateType**:
+  - Renamed `SnackbarType` enum class to `StateType`, which now includes the following states: `SUCCESS`, `ERROR`, `INFO`, `WARNING`, `DEFAULT`.
+
+- **Theme, Colors, and Styles**:
+  - Updated theme and style files. The color palette was refreshed, new style definitions were added, and improvements were made to existing themes.
+
+- **Drawable Files**:
+  - Renamed several drawable files for better readability and naming conventions.
+
+
 ## [1.1.2] - 2024-07-26
 ### Changed
 - **BaseAdapter**:

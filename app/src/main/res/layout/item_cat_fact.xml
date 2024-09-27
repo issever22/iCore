@@ -17,7 +17,7 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/text_moe_16sp_medium"
+            style="@style/text_c_midnight_14sp_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
@@ -27,7 +27,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/c_lavender" />
+            android:background="@color/c_grey_alt" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

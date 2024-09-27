@@ -14,8 +14,8 @@ android {
         applicationId = "com.issever.issevercore"
         minSdk = 29
         targetSdk = 34
-        versionCode = 4
-        versionName = "1.0.4"
+        versionCode = 5
+        versionName = "1.0.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -50,6 +50,7 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.activity:activity:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

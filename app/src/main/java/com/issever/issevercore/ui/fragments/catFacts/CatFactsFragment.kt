@@ -2,6 +2,7 @@ package com.issever.issevercore.ui.fragments.catFacts
 
 import androidx.fragment.app.activityViewModels
 import com.issever.core.base.BaseFragment
+import com.issever.core.util.extensions.addOnEndlessScrollListener
 import com.issever.core.util.extensions.observe
 import com.issever.core.util.extensions.showCustomDialog
 import com.issever.issevercore.R
@@ -18,6 +19,7 @@ class CatFactsFragment : BaseFragment<FragmentCatFactsBinding, MainViewModel>() 
     override fun initViewBinding() = FragmentCatFactsBinding.inflate(layoutInflater)
 
     private val adapter = CatFactsAdapter()
+    private var currentPage = 0
 
     override fun init() {
         super.init()
@@ -25,9 +27,34 @@ class CatFactsFragment : BaseFragment<FragmentCatFactsBinding, MainViewModel>() 
         binding.viewModel = viewModel
         loadingView = binding.progressBar
 
-        viewModel.getCatFacts()
-
         binding.rvFacts.adapter = adapter
+
+        viewModel.getCatFacts(currentPage)
+
+        // Adds an endless scroll listener to the RecyclerView, enabling infinite scrolling and pull-to-refresh functionality.
+        binding.rvFacts.addOnEndlessScrollListener(
+            // The minimum number of items below your current scroll position before loading more (optional, default is 5).
+            visibleThreshold = 10,
+            // FloatingActionButton used to scroll the list back to the top (optional).
+            returnToTopFab = binding.fabReturnTop,
+            // SwipeRefreshLayout that handles the pull-to-refresh gesture (optional).
+            swipeRefreshLayout = binding.swpFacts,
+            // Callback invoked when more data needs to be loaded (required).
+            onLoadMore = { page, totalItemsCount, view ->
+                // Update the current page number.
+                currentPage = page
+                // Fetch more cat facts based on the current page.
+                viewModel.getCatFacts(currentPage)
+            },
+            // Callback invoked when a refresh is requested (optional).
+            onRefresh = {
+                // Reset to the first page.
+                currentPage = 0
+                // Fetch the initial set of cat facts.
+                viewModel.getCatFacts(currentPage)
+            }
+        )
+
 
         // `view` is the specific View within the item layout that was clicked.
         // This allows you to perform actions or access properties of the clicked View directly.
@@ -43,7 +70,12 @@ class CatFactsFragment : BaseFragment<FragmentCatFactsBinding, MainViewModel>() 
         super.initObservers()
 
         observe(viewModel.facts) {
-            adapter.submitList(it)
+            if (currentPage == 1) {
+                adapter.submitList(it)
+            } else {
+                adapter.addItems(it)
+            }
+            binding.swpFacts.isRefreshing = false
         }
 
         observe(viewModel.showFavoriteFact) { fact ->

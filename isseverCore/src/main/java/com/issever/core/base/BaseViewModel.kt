@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.issever.core.data.enums.SnackbarType
+import com.issever.core.data.enums.StateType
 import com.issever.core.data.enums.ResourceStatus
 import com.issever.core.data.model.SnackbarMessage
 import com.issever.core.util.CoreErrors.COMMON_ERROR
@@ -79,7 +79,7 @@ abstract class BaseViewModel : ViewModel() {
      * @param action Optional action to perform when the action button is clicked.
      */
     open fun showSuccessSnackbar(message: String, actionText: String? = null, action: (() -> Unit)? = null) {
-        showSnackbar(SnackbarMessage(message, SnackbarType.SUCCESS, actionText = actionText, action = action))
+        showSnackbar(SnackbarMessage(message, StateType.SUCCESS, actionText = actionText, action = action))
     }
 
     /**
@@ -90,7 +90,7 @@ abstract class BaseViewModel : ViewModel() {
      * @param action Optional action to perform when the action button is clicked.
      */
     open fun showSuccessSnackbar(@StringRes messageResId: Int, @StringRes actionTextResId: Int? = null, action: (() -> Unit)? = null) {
-        showSnackbar(SnackbarMessage(resourceProvider.getString(messageResId), SnackbarType.SUCCESS, actionText = actionTextResId?.let {
+        showSnackbar(SnackbarMessage(resourceProvider.getString(messageResId), StateType.SUCCESS, actionText = actionTextResId?.let {
             resourceProvider.getString(it)
         }, action = action))
     }
@@ -103,7 +103,7 @@ abstract class BaseViewModel : ViewModel() {
      * @param action Optional action to perform when the action button is clicked.
      */
     open fun showErrorSnackbar(message: String, actionText: String? = null, action: (() -> Unit)? = null) {
-        showSnackbar(SnackbarMessage(message, SnackbarType.ERROR, actionText = actionText, action = action))
+        showSnackbar(SnackbarMessage(message, StateType.ERROR, actionText = actionText, action = action))
     }
 
     /**
@@ -114,7 +114,7 @@ abstract class BaseViewModel : ViewModel() {
      * @param action Optional action to perform when the action button is clicked.
      */
     open fun showErrorSnackbar(@StringRes messageResId: Int, @StringRes actionTextResId: Int? = null, action: (() -> Unit)? = null) {
-        showSnackbar(SnackbarMessage(resourceProvider.getString(messageResId), SnackbarType.ERROR, actionText = actionTextResId?.let {
+        showSnackbar(SnackbarMessage(resourceProvider.getString(messageResId), StateType.ERROR, actionText = actionTextResId?.let {
             resourceProvider.getString(it)
         }, action = action))
     }
@@ -128,18 +128,20 @@ abstract class BaseViewModel : ViewModel() {
      * @param successAction Optional action to perform on success.
      * @param errorAction Optional action to perform on error. Takes a message and an optional error body.
      * @param loadingAction Optional action to perform while loading.
-     * @param snackbarType Optional type of Snackbar to show on error or other custom state.
+     * @param stateType Optional type of Snackbar to show on error or other custom state.
      * @param actionText Optional text for the Snackbar action button.
      * @param snackBarAction Optional action to perform when the Snackbar action button is clicked.
+     * @param shouldShowError A lambda function that determines whether to show an error message or not.
      */
     open fun <T> collectData(
         operation: suspend () -> Flow<Resource<T>>,
         successAction: ((T?) -> Unit)? = null,
         errorAction: ((String, String?) -> Unit)? = null,
         loadingAction: (() -> Unit)? = null,
-        snackbarType: SnackbarType? = null,
+        stateType: StateType? = null,
         actionText: String? = null,
-        snackBarAction: (() -> Unit)? = null
+        snackBarAction: (() -> Unit)? = null,
+        shouldShowError: ((String?, String?) -> Boolean) = { _, _ -> true }
     ) {
         viewModelScope.launch {
             operation().collect {
@@ -151,7 +153,7 @@ abstract class BaseViewModel : ViewModel() {
                             showSnackbar(
                                 SnackbarMessage(
                                     message,
-                                    SnackbarType.SUCCESS,
+                                    StateType.SUCCESS,
                                     action = snackBarAction,
                                     actionText = actionText
                                 )
@@ -161,33 +163,37 @@ abstract class BaseViewModel : ViewModel() {
 
                     ResourceStatus.ERROR -> {
                         hideProgress()
-                        it.message?.let { message ->
-                            showSnackbar(
-                                SnackbarMessage(
-                                    message,
-                                    snackbarType ?: SnackbarType.ERROR,
-                                    action = snackBarAction,
-                                    actionText = actionText
+                        if (shouldShowError(it.message, it.errorBody)) {
+                            it.message?.let { message ->
+                                showSnackbar(
+                                    SnackbarMessage(
+                                        message,
+                                        stateType ?: StateType.ERROR,
+                                        action = snackBarAction,
+                                        actionText = actionText
+                                    )
                                 )
-                            )
+                            }
                         }
-                        errorAction?.invoke(it.message ?: COMMON_ERROR,it.errorBody)
+                        errorAction?.invoke(it.message ?: COMMON_ERROR, it.errorBody)
                     }
 
                     ResourceStatus.WARNING -> {
                         hideProgress()
                         successAction?.invoke(it.data)
-                        it.message?.let { message ->
-                            showSnackbar(
-                                SnackbarMessage(
-                                    message,
-                                    snackbarType ?: SnackbarType.WARNING,
-                                    action = snackBarAction,
-                                    actionText = actionText
+                        if (shouldShowError(it.message, it.errorBody)) {
+                            it.message?.let { message ->
+                                showSnackbar(
+                                    SnackbarMessage(
+                                        message,
+                                        stateType ?: StateType.WARNING,
+                                        action = snackBarAction,
+                                        actionText = actionText
+                                    )
                                 )
-                            )
+                            }
                         }
-                        errorAction?.invoke(it.message ?: COMMON_ERROR,it.errorBody)
+                        errorAction?.invoke(it.message ?: COMMON_ERROR, it.errorBody)
                     }
 
                     ResourceStatus.INFO -> {
@@ -197,7 +203,7 @@ abstract class BaseViewModel : ViewModel() {
                             showSnackbar(
                                 SnackbarMessage(
                                     message,
-                                    SnackbarType.INFO,
+                                    StateType.INFO,
                                     action = snackBarAction,
                                     actionText = actionText
                                 )
@@ -213,4 +219,5 @@ abstract class BaseViewModel : ViewModel() {
             }
         }
     }
+
 }

@@ -1,13 +1,11 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="@style/Theme.Material3.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/c_primary</item>
-        <item name="colorPrimaryDark">@color/c_secondary</item>
-        <item name="colorAccent">@color/c_blue</item>
+    <!-- Base text style for common properties -->
+    <style name="BaseTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/outfit_regular</item>
     </style>
 
+    <!-- Image styles -->
     <style name="circle_image_left_r10" parent="">
         <item name="cornerSizeTopLeft">10%</item>
         <item name="cornerSizeBottomLeft">10%</item>
@@ -25,401 +23,213 @@
         <item name="cornerFamily">rounded</item>
     </style>
 
-    <style name="CustomAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="colorSurface">@android:color/transparent</item>
-        <item name="background">@android:color/transparent</item>
-        <item name="android:background">@android:color/transparent</item>
-        <item name="materialAlertDialogTitleTextStyle">@style/TitleTextStyle</item>
-        <item name="materialAlertDialogBodyTextStyle">@style/BodyTextStyle</item>
-        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
-        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
-    </style>
-
-    <style name="TitleTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
-        <item name="android:textColor">@color/c_midnight</item>
-        <item name="fontFamily">@font/outfit_semi_bold</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="BodyTextStyle" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
-        <item name="android:textColor">@color/c_navy</item>
-        <item name="fontFamily">@font/outfit_regular</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/c_primary</item>
-        <item name="fontFamily">@font/outfit_semi_bold</item>
-        <item name="textAllCaps">false</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/c_primary</item>
-        <item name="fontFamily">@font/outfit_semi_bold</item>
-        <item name="textAllCaps">false</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="text_negative_button" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/c_steel</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-    <style name="text_positive_button" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_green</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-
-    <style name="text_midnight_20sp_semi_bold" parent="TextAppearance.AppCompat">
+    <!-- Midnight color styles -->
+    <style name="text_c_midnight_20sp_semi_bold" parent="BaseTextStyle">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/c_midnight</item>
         <item name="android:fontFamily">@font/outfit_semi_bold</item>
     </style>
 
-    <style name="text_midnight_16sp_semi_bold" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/c_midnight</item>
-        <item name="android:fontFamily">@font/outfit_semi_bold</item>
-    </style>
-
-    <style name="text_midnight_18sp_semi_bold" parent="TextAppearance.AppCompat">
+    <style name="text_c_midnight_18sp_semi_bold" parent="BaseTextStyle">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/c_midnight</item>
         <item name="android:fontFamily">@font/outfit_semi_bold</item>
     </style>
 
-    <style name="text_midnight_14sp_semi_bold" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_midnight</item>
-        <item name="android:fontFamily">@font/outfit_semi_bold</item>
-    </style>
-
-    <style name="text_midnight_24sp_semi_bold" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@color/c_midnight</item>
-        <item name="android:fontFamily">@font/outfit_semi_bold</item>
-    </style>
-
-    <style name="text_midnight_16sp_medium" parent="TextAppearance.AppCompat">
+    <style name="text_c_midnight_16sp_medium" parent="BaseTextStyle">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/c_midnight</item>
         <item name="android:fontFamily">@font/outfit_medium</item>
     </style>
 
-    <style name="text_midnight_14sp_medium" parent="TextAppearance.AppCompat">
+    <style name="text_c_midnight_14sp_medium" parent="BaseTextStyle">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/c_midnight</item>
         <item name="android:fontFamily">@font/outfit_medium</item>
     </style>
 
-    <style name="text_green_12sp_semi_bold" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/c_green</item>
-        <item name="android:fontFamily">@font/outfit_semi_bold</item>
-    </style>
-
-    <style name="text_green_12sp_regular" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/c_green</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-    <style name="text_green_16sp_medium" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/c_green</item>
-        <item name="android:fontFamily">@font/outfit_medium</item>
-    </style>
-
-    <style name="text_state_14sp_regular" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_state</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-    <style name="text_slate_12sp_regular" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/c_slate</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-    <style name="text_slate_14sp_regular" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_slate</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-    <style name="text_slate_12sp_medium" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/c_slate</item>
-        <item name="android:fontFamily">@font/outfit_medium</item>
-    </style>
-
-    <style name="text_slate_16sp_medium" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/c_slate</item>
-        <item name="android:fontFamily">@font/outfit_medium</item>
-    </style>
-
-    <style name="text_primary_12sp_regular" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/c_primary</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-    <style name="text_primary_14sp_semi_bold" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_primary</item>
-        <item name="android:fontFamily">@font/outfit_semi_bold</item>
-    </style>
-
-    <style name="text_primary_16sp_semi_bold" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/c_primary</item>
-        <item name="android:fontFamily">@font/outfit_semi_bold</item>
-    </style>
-
-    <style name="text_primary_14sp_medium" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_primary</item>
-        <item name="android:fontFamily">@font/outfit_medium</item>
-    </style>
-
-    <style name="text_primary_14sp_regular" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_primary</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-    <style name="text_steel_12sp_regular" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/c_steel</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-    <style name="text_steel_12sp_medium" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/c_steel</item>
-        <item name="android:fontFamily">@font/outfit_medium</item>
-    </style>
-
-    <style name="text_steel_14sp_medium" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_steel</item>
-        <item name="android:fontFamily">@font/outfit_medium</item>
-    </style>
-
-    <style name="text_steel_14sp_semi_bold" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_steel</item>
-        <item name="android:fontFamily">@font/outfit_semi_bold</item>
-    </style>
-
-    <style name="text_steel_12sp_semi_bold" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/c_steel</item>
-        <item name="android:fontFamily">@font/outfit_semi_bold</item>
-    </style>
-
-    <style name="text_steel_14sp_regular" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_steel</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-    <style name="text_steel_16sp_regular" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/c_steel</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-    <style name="text_midnight_12sp_regular" parent="TextAppearance.AppCompat">
+    <style name="text_c_midnight_12sp_regular" parent="BaseTextStyle">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/c_midnight</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
     </style>
 
-    <style name="text_midnight_12sp_semi_bold" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/c_midnight</item>
-        <item name="android:fontFamily">@font/outfit_semi_bold</item>
-    </style>
-
-    <style name="text_midnight_14sp_regular" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_midnight</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-    <style name="text_midnight_16sp_regular" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/c_midnight</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-    <style name="text_midnight_30sp_regular" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">30sp</item>
-        <item name="android:textColor">@color/c_midnight</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-    <style name="text_moe_14sp_medium" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_moe</item>
-        <item name="android:fontFamily">@font/outfit_medium</item>
-    </style>
-
-    <style name="text_moe_14sp_regular" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_moe</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-    <style name="text_moe_16sp_medium" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/c_moe</item>
-        <item name="android:fontFamily">@font/outfit_medium</item>
-    </style>
-
-    <style name="text_gainsboro_12sp_medium" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/c_gainsboro</item>
-        <item name="android:fontFamily">@font/outfit_medium</item>
-    </style>
-
-    <style name="text_gainsboro_12sp_regular" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/c_gainsboro</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-    <style name="text_gainsboro_12sp_semi_bold" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/c_gainsboro</item>
-        <item name="android:fontFamily">@font/outfit_semi_bold</item>
-    </style>
-
-    <style name="text_gainsboro_14sp_semi_bold" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_gainsboro</item>
-        <item name="android:fontFamily">@font/outfit_semi_bold</item>
-    </style>
-
-    <style name="text_gainsboro_14sp_medium" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_gainsboro</item>
-        <item name="android:fontFamily">@font/outfit_medium</item>
-    </style>
-
-    <style name="text_gainsboro_14sp_regular" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_gainsboro</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
-    </style>
-
-    <style name="text_red_12sp_medium" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/c_red</item>
-        <item name="android:fontFamily">@font/outfit_medium</item>
-    </style>
-
-    <style name="text_red_14sp_medium" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_red</item>
-        <item name="android:fontFamily">@font/outfit_medium</item>
-    </style>
-
-    <style name="text_orange_14sp_medium" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_orange</item>
-        <item name="android:fontFamily">@font/outfit_medium</item>
-    </style>
-
-    <style name="text_red_12sp_semi_bold" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/c_red</item>
-        <item name="android:fontFamily">@font/outfit_semi_bold</item>
-    </style>
-
-    <style name="text_white_20sp_semi_bold" parent="TextAppearance.AppCompat">
+    <!-- Green color styles -->
+    <style name="text_c_green_20sp_semi_bold" parent="BaseTextStyle">
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/c_white</item>
+        <item name="android:textColor">@color/c_green</item>
         <item name="android:fontFamily">@font/outfit_semi_bold</item>
     </style>
 
-    <style name="text_white_16sp_semi_bold" parent="TextAppearance.AppCompat">
+    <style name="text_c_green_18sp_semi_bold" parent="BaseTextStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/c_green</item>
+        <item name="android:fontFamily">@font/outfit_semi_bold</item>
+    </style>
+
+    <style name="text_c_green_16sp_medium" parent="BaseTextStyle">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/c_white</item>
-        <item name="android:fontFamily">@font/outfit_semi_bold</item>
-    </style>
-
-    <style name="text_white_14sp_medium" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_white</item>
+        <item name="android:textColor">@color/c_green</item>
         <item name="android:fontFamily">@font/outfit_medium</item>
     </style>
 
-    <style name="text_white_14sp_regular" parent="TextAppearance.AppCompat">
+    <style name="text_c_green_14sp_medium" parent="BaseTextStyle">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/c_white</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
+        <item name="android:textColor">@color/c_green</item>
+        <item name="android:fontFamily">@font/outfit_medium</item>
     </style>
 
-    <style name="text_black_white_20sp_semi_bold" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/c_black_white</item>
-        <item name="android:fontFamily">@font/outfit_semi_bold</item>
-    </style>
-
-    <style name="text_navy_16sp_semi_bold" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/c_navy</item>
-        <item name="android:fontFamily">@font/outfit_semi_bold</item>
-    </style>
-
-    <style name="text_navy_12sp_regular" parent="TextAppearance.AppCompat">
+    <style name="text_c_green_12sp_regular" parent="BaseTextStyle">
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/c_navy</item>
-        <item name="android:fontFamily">@font/outfit_regular</item>
+        <item name="android:textColor">@color/c_green</item>
     </style>
 
+    <!-- Charcoal color styles -->
+    <style name="text_c_charcoal_20sp_semi_bold" parent="BaseTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/c_charcoal</item>
+        <item name="android:fontFamily">@font/outfit_semi_bold</item>
+    </style>
+
+    <style name="text_c_charcoal_18sp_semi_bold" parent="BaseTextStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/c_charcoal</item>
+        <item name="android:fontFamily">@font/outfit_semi_bold</item>
+    </style>
+
+    <style name="text_c_charcoal_16sp_medium" parent="BaseTextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/c_charcoal</item>
+        <item name="android:fontFamily">@font/outfit_medium</item>
+    </style>
+
+    <style name="text_c_charcoal_14sp_medium" parent="BaseTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/c_charcoal</item>
+        <item name="android:fontFamily">@font/outfit_medium</item>
+    </style>
+
+    <style name="text_c_charcoal_12sp_regular" parent="BaseTextStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/c_charcoal</item>
+    </style>
+
+    <!-- Steel color styles -->
+    <style name="text_c_steel_20sp_semi_bold" parent="BaseTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/c_steel</item>
+        <item name="android:fontFamily">@font/outfit_semi_bold</item>
+    </style>
+
+    <style name="text_c_steel_18sp_semi_bold" parent="BaseTextStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/c_steel</item>
+        <item name="android:fontFamily">@font/outfit_semi_bold</item>
+    </style>
+
+    <style name="text_c_steel_16sp_medium" parent="BaseTextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/c_steel</item>
+        <item name="android:fontFamily">@font/outfit_medium</item>
+    </style>
+
+    <style name="text_c_steel_14sp_medium" parent="BaseTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/c_steel</item>
+        <item name="android:fontFamily">@font/outfit_medium</item>
+    </style>
+
+    <style name="text_c_steel_12sp_regular" parent="BaseTextStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/c_steel</item>
+    </style>
+
+    <!-- White color styles -->
+    <style name="text_white_20sp_semi_bold" parent="BaseTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/outfit_semi_bold</item>
+    </style>
+
+    <style name="text_white_18sp_semi_bold" parent="BaseTextStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/outfit_semi_bold</item>
+    </style>
+
+    <style name="text_white_16sp_medium" parent="BaseTextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/outfit_medium</item>
+    </style>
+
+    <style name="text_white_14sp_medium" parent="BaseTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/outfit_medium</item>
+    </style>
+
+    <style name="text_white_12sp_regular" parent="BaseTextStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- Black color styles -->
+    <style name="text_black_20sp_semi_bold" parent="BaseTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/outfit_semi_bold</item>
+    </style>
+
+    <style name="text_black_18sp_semi_bold" parent="BaseTextStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/outfit_semi_bold</item>
+    </style>
+
+    <style name="text_black_16sp_medium" parent="BaseTextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/outfit_medium</item>
+    </style>
+
+    <style name="text_black_14sp_medium" parent="BaseTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/outfit_medium</item>
+    </style>
+
+    <style name="text_black_12sp_regular" parent="BaseTextStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!-- Custom Tab Layout styles -->
     <style name="CustomTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabBackground">@color/c_snow</item>
+        <item name="tabBackground">@color/c_surface_container_lowest</item>
         <item name="tabSelectedTextAppearance">@style/CustomTabSelectedText</item>
-        <item name="tabIndicatorColor">@color/c_primary</item>
         <item name="tabTextAppearance">@style/CustomTabUnselectedText</item>
-        <item name="textAllCaps">false</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="CustomTabSelectedText" parent="TextAppearance.Design.Tab">
         <item name="android:textColor">@color/c_midnight</item>
         <item name="android:textSize">14sp</item>
-        <item name="fontFamily">@font/outfit_semi_bold</item>
-        <item name="textAllCaps">false</item>
+        <item name="android:fontFamily">@font/outfit_semi_bold</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="CustomTabUnselectedText" parent="TextAppearance.Design.Tab">
-        <item name="android:textColor">@color/c_gainsboro</item>
+        <item name="android:textColor">@color/c_grey_alt</item>
         <item name="android:textSize">14sp</item>
-        <item name="fontFamily">@font/outfit_medium</item>
-        <item name="textAllCaps">false</item>
+        <item name="android:fontFamily">@font/outfit_medium</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
+    <!-- Spinner text appearance -->
     <style name="spinner_text_appearance_item" parent="Widget.AppCompat.DropDownItem.Spinner">
         <item name="android:textColor">@color/c_moe</item>
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/outfit_medium</item>
-    </style>
-
-    <style name="TransparentBottomSheetDialogTheme" parent="AppTheme">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:colorBackground">@android:color/transparent</item>
     </style>
 
 </resources>

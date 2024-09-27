@@ -18,8 +18,8 @@ class FactRemoteData @Inject constructor(
         })
     }
 
-    suspend fun getFacts(): Resource<CatFactsResponse> {
-        return responseHandler({ service.getFacts() })
+    suspend fun getFacts(page : Int): Resource<CatFactsResponse> {
+        return responseHandler({ service.getFacts(page) })
     }
 
 }

@@ -17,7 +17,7 @@
         tools:context=".ui.fragments.home.HomeFragment">
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/text_midnight_18sp_semi_bold"
+            style="@style/text_c_midnight_18sp_semi_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
@@ -34,7 +34,7 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/text_gainsboro_14sp_medium"
+                    style="@style/text_c_charcoal_14sp_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/icore_demo_app_desc" />
@@ -43,39 +43,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="20dp"
-                    android:background="@color/c_lavender" />
+                    android:background="@color/c_grey_alt" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/text_midnight_16sp_medium"
+                    style="@style/text_c_midnight_16sp_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/remote_data" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/text_gainsboro_14sp_medium"
+                    style="@style/text_c_charcoal_14sp_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:text="@string/remote_data_desc" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <com.google.android.material.button.MaterialButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
-                    android:background="@drawable/bg_blue_r36"
                     android:onClick="@{() -> viewModel.navigateToCatFacts()}"
                     android:text="@string/remote_data_samples"
-                    android:textAppearance="@style/text_white_16sp_semi_bold" />
+                    android:textAppearance="@style/text_white_14sp_medium"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="20dp"
-                    android:background="@color/c_lavender" />
+                    android:background="@color/c_grey_alt" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/text_midnight_16sp_medium"
+                    style="@style/text_c_midnight_16sp_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="10dp"
@@ -83,7 +82,7 @@
                     android:text="@string/language_and_theme" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/text_gainsboro_14sp_medium"
+                    style="@style/text_c_charcoal_14sp_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
@@ -95,25 +94,23 @@
                     android:layout_marginVertical="10dp"
                     android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <com.google.android.material.button.MaterialButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_blue_r36"
                         android:onClick="@{() -> viewModel.chooseLanguage()}"
                         android:text="@string/choose_language"
-                        android:textAppearance="@style/text_white_16sp_semi_bold" />
+                        android:textAppearance="@style/text_white_14sp_medium" />
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <com.google.android.material.button.MaterialButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_blue_r36"
                         android:onClick="@{() -> viewModel.chooseTheme()}"
                         android:text="@string/choose_theme"
-                        android:textAppearance="@style/text_white_16sp_semi_bold" />
+                        android:textAppearance="@style/text_white_14sp_medium" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -121,10 +118,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="20dp"
-                    android:background="@color/c_lavender" />
+                    android:background="@color/c_grey_alt" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/text_midnight_16sp_medium"
+                    style="@style/text_c_midnight_16sp_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="10dp"
@@ -137,25 +134,23 @@
                     android:layout_marginVertical="10dp"
                     android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <com.google.android.material.button.MaterialButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_blue_r36"
                         android:onClick="@{() -> viewModel.getSuccess()}"
                         android:text="@string/s_success"
-                        android:textAppearance="@style/text_white_16sp_semi_bold" />
+                        android:textAppearance="@style/text_white_14sp_medium" />
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <com.google.android.material.button.MaterialButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_blue_r36"
                         android:onClick="@{() -> viewModel.getError()}"
                         android:text="@string/s_error"
-                        android:textAppearance="@style/text_white_16sp_semi_bold" />
+                        android:textAppearance="@style/text_white_14sp_medium" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -165,35 +160,32 @@
                     android:layout_marginVertical="10dp"
                     android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <com.google.android.material.button.MaterialButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_blue_r36"
                         android:onClick="@{() -> viewModel.getWarning()}"
                         android:text="@string/s_warning"
-                        android:textAppearance="@style/text_white_16sp_semi_bold" />
+                        android:textAppearance="@style/text_white_14sp_medium" />
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <com.google.android.material.button.MaterialButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_blue_r36"
                         android:onClick="@{() -> viewModel.getInfo()}"
                         android:text="@string/s_info"
-                        android:textAppearance="@style/text_white_16sp_semi_bold" />
+                        android:textAppearance="@style/text_white_14sp_medium" />
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <com.google.android.material.button.MaterialButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_blue_r36"
                         android:onClick="@{() -> viewModel.getDefault()}"
                         android:text="@string/s_default"
-                        android:textAppearance="@style/text_white_16sp_semi_bold" />
+                        android:textAppearance="@style/text_white_14sp_medium" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

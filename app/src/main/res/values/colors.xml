@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    <!-- Main Colors -->
+    <color name="c_primary">#475569</color> <!-- Primary Color -->
+    <color name="c_primary_fixed_dim">#B0BEC5</color> <!-- Primary Fixed (Dim Tone) -->
+
+    <!-- Secondary Colors -->
+    <color name="c_secondary">#64748B</color> <!-- Secondary Color -->
+    <color name="c_secondary_fixed_dim">#6C7B91</color> <!-- Secondary Fixed (Dim Tone) -->
+
+    <!-- Accent Colors -->
+    <color name="c_tertiary">#94A3B8</color> <!-- Tertiary Color (Soft Tone) -->
+
 </resources>
